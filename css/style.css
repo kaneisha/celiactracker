@@ -133,16 +133,22 @@ fieldset {
     font-family: helvetica; }
 
 /*---------------------------- Product Page ------------------------------------*/
+.api {
+  float: right; }
+
 h2 {
   color: #6cb419;
   font-family: helvetica;
   text-align: center;
   margin-top: 37px; }
 
-h4 {
+#gluten {
   color: #6cb419;
   font-family: helvetica;
-  margin-bottom: 23px; }
+  margin-bottom: 23px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 15px; }
 
 #underline {
   height: 2px;
@@ -150,3 +156,11 @@ h4 {
   border-radius: 2px;
   margin: 9px 0 23px 10px;
   width: 260px; }
+
+#statement {
+  font-family: helvetica;
+  padding-left: 8px;
+  padding-right: 5px;
+  font-size: 15px;
+  margin-bottom: 15px;
+  margin-top: 5px; }
