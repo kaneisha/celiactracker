@@ -127,7 +127,7 @@ fieldset {
 #list {
   margin-top: 30px; }
   #list p {
-    margin-left: 21px;
+    margin-left: 15px;
     margin-bottom: 15px;
     color: #4b4c4c;
     font-family: helvetica; }
@@ -158,7 +158,7 @@ h2 {
   width: 260px; }
 
 #statement {
-  font-family: helvetica;
+  font-family: arial;
   padding-left: 8px;
   padding-right: 5px;
   font-size: 15px;

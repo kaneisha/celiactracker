@@ -1,5 +1,15 @@
 var landingTemplate;
 
+var onPress = function(e){
+      	//console.log(e);
+      	if(e.keyCode == 13){
+      		var search = $('.result_search').val();
+			loadResults(search);
+      	}
+      }
+
+window.addEventListener('keydown', onPress);
+
 var loadLanding = function() {
 	// console.log("hey");
 	$('#wrap').empty();
@@ -51,7 +61,6 @@ var getResults = function(api){
       	// console.log(itemid);
       	loadProduct(item);
       })
-
 
 
     });
@@ -128,7 +137,7 @@ var getProduct = function(item){
 
   var tag = opts.tag || 'strong',
       words = opts.words || [],
-      regex = RegExp(words.join('|'), 'gi'),
+      regex = RegExp(words.join('|'), 'gi'), //case insensitive
       replacement = '<'+ tag +'>$&</'+ tag +'>';
 
   	return this.html(function() {
@@ -138,7 +147,7 @@ var getProduct = function(item){
 
 $('#statement').wrapInTag({
   tag: 'strong',
-  words: ['WHEAT', 'Oats']
+  words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free']
 });
 
 
