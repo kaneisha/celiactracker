@@ -25,10 +25,16 @@ var loadLanding = function() {
 		$('#wrap').append(html);
 
 		$('#enter').on('click', function(e) {
-			console.log('clicks');
+			//console.log('clicks');
 			e.preventDefault();
 			var search = $('#user_search').val();
 			loadResults(search);
+		});
+
+			$('#signup').on('click', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadRegister();
 		});
 
 	});
@@ -36,7 +42,81 @@ var loadLanding = function() {
 
 loadLanding();
 
+//----------------------------------------------------- Register -------------------------------------------------------------------------//
+var loadRegister = function(){
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var signup = $(htmlArg).find('#signup').html();
+		$.template('registertemplate', signup);
+
+		var html = $.render('', 'registertemplate');
+
+	$('#wrap').append(html);
+
+	$('#sign_up').on('click', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			register();
+		});
+});
+};
+
+var register = function() {
+	var user = $('#user').val();
+	var pass = $('#pass').val();
+	var email = $('#email').val();
+	$.ajax({
+		url : 'php/register.php',
+		data : {
+		user : user,
+		pwd : pass,
+		email : email
+	},
+	type : 'post',
+	dataType : 'json',
+	success : function(response) {
+	if (response.user) {
+	console.log(response);
+	loadLanding();
+	} else {
+	console.log('register unsuccessful');
+	//$('#register_error').html('*Please input the correct information in all fields');
+	//loadLanding();
+	}
+	}
+	//return false;
+	});
+
+	return false;
+};
+
+
+
 // ------------------------------------------------------ Results ------------------------------------------------------------------------//
+var loadResults = function(search){
+
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var resultslist = $(htmlArg).find('#results').html();
+		$.template('resultstemplate', resultslist);
+
+		var html = $.render('', 'resultstemplate');
+
+	$('#wrap').append(html);
+
+	var api = "http://api.nutritionix.com/v1/search/" + search + "?results=0:21&fields=item_name,brand_name,item_id,nf_ingredient_statement&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
+
+	getResults(api);
+});
+};
+
+
 var getResults = function(api){
 	  $.getJSON( api, {
 	    // tags: "mount rainier",
@@ -66,25 +146,6 @@ var getResults = function(api){
     });
 };
 
-var loadResults = function(search){
-
-	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
-
-		landingTemplate = htmlArg;
-
-		var resultslist = $(htmlArg).find('#results').html();
-		$.template('resultstemplate', resultslist);
-
-		var html = $.render('', 'resultstemplate');
-
-	$('#wrap').append(html);
-
-	var api = "http://api.nutritionix.com/v1/search/" + search + "?results=0:21&fields=item_name,brand_name,item_id,nf_ingredient_statement&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
-
-	getResults(api);
-});
-};
 
 //--------------------------------------------------------- Product ------------------------------------------------------------------------//
 
@@ -115,6 +176,11 @@ var getProduct = function(item){
       console.log(data);
       $('#statement').append(data.nf_ingredient_statement);
       $('h2').append(data.item_name);
+
+      if(data.nf_ingredient_statement === null){
+      	$('#statement').html('Ingredients not available');
+      	$('#gluten').html('Ingredients not available');
+      }
 
 
       if(data.nf_ingredient_statement.indexOf("WHEAT") > -1){
