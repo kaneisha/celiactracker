@@ -71,8 +71,8 @@ var register = function() {
 	$.ajax({
 		url : 'php/register.php',
 		data : {
-		user : user,
-		pwd : pass,
+		username : user,
+		password : pass,
 		email : email
 	},
 	type : 'post',
