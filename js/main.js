@@ -80,11 +80,20 @@ var register = function() {
 	success : function(response) {
 	if (response.user) {
 	console.log(response);
-	loadLanding();
-	} else {
-	console.log('register unsuccessful');
-	//$('#register_error').html('*Please input the correct information in all fields');
 	//loadLanding();
+	} else {
+	console.log(response);
+	//$('#email_error').append(response.error);
+	if(response.error == "Not a valid Email Address"){
+		$('#email_error').append(response.error);
+	}
+	if(response.error == "Email already exists"){
+		$('#email_error').append(response.error);
+	}
+	if(response.error == "Password must be at least 8 to 15 characters"){
+		$('#pwd_error').append(response.error);
+	}
+
 	}
 	}
 	//return false;

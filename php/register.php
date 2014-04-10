@@ -5,13 +5,34 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 //error_reporting(E_ALL);
-//require_once("reqs/common.php");
+require_once("reqs/validation.php");
+require_once("reqs/common.php");
 
 $db = new PDO("mysql:hostname=localhost;dbname=celiactracker","root","root");
-//$dbh = new PDB();
-//$db = $dbh->db;
 
-//$account = new Account($db);
+$validate = new Validate($db);
+
+$check = $validate->emailCheck($email);
+if($check===true){
+errormsg("Email already exists");
+}
+
+if($validate->validatePassword($password) == false){
+	errormsg("Password must be at least 8 to 15 characters");
+}
+if($validate->validateEmail($email) == false){
+	//errormsg("Not a valid signup");
+	errormsg("Not a valid Email Address");
+}
+// $check = $validate->validateSignUp($email,$password);
+// if($check===true){
+
+// }
+
+// $exists = $site->checkEmail($email);
+// if($check===true){
+// errormsg("Email address already in use.");
+// }
 
 try{
 	$protectPass = (md5($password));
@@ -73,21 +94,6 @@ try{
 
 
 //$hashed = $site->hasher($username, $password);
-
-// try{
-// $st = $db->prepare("
-// INSERT INTO users
-// (username, email, password)
-// VALUES (:user, :email, :pass)
-// ");
-// $st->execute(array(
-// ":user"=>$username,
-// ":pass"=>$password,
-// ":email"=>$email
-// ));
-
-// $st = $db->prepare("SELECT LAST_INSERT_ID()");
-// $st->execute();
 
 // //$lastid = $st->fetch();
 

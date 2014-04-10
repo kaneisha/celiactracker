@@ -116,6 +116,11 @@ fieldset{
 	margin-left: 30px;
 }
 
+#email_error,#pwd_error{
+color: #f00;
+font-size: 12px;
+}
+
 /*--------------------------------------Results Page--------------------------------*/
 .logo{
 	color: $bg;
