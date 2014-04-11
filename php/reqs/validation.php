@@ -85,7 +85,34 @@ public function emailCheck($email){
 
 	return $check;
 
-} // checkName
+}
+
+public function userCheck($username){
+
+$check = false;
+try{
+
+$sql = $this->db->prepare("
+SELECT username
+FROM users
+WHERE username = :user
+");
+$sql->bindParam(":user", $username);
+$sql->execute();
+
+$result = $sql->fetchAll(PDO::FETCH_OBJ);
+
+if( count($result)>0 ){
+$check = true;
+}
+
+}catch (PDOException $e){
+errormsg($e->getMessage());
+}
+
+return $check;
+
+}
 
 }
 ?>

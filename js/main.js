@@ -93,6 +93,9 @@ var register = function() {
 	if(response.error == "Password must be at least 8 to 15 characters"){
 		$('#pwd_error').append(response.error);
 	}
+	if(response.error == "Username already exists"){
+		$('#error').append(response.error);
+	}
 
 	}
 	}

@@ -17,6 +17,11 @@ if($check===true){
 errormsg("Email already exists");
 }
 
+$check = $validate->userCheck($username);
+if($check===true){
+errormsg("Username already exists");
+}
+
 if($validate->validatePassword($password) == false){
 	errormsg("Password must be at least 8 to 15 characters");
 }
@@ -24,15 +29,6 @@ if($validate->validateEmail($email) == false){
 	//errormsg("Not a valid signup");
 	errormsg("Not a valid Email Address");
 }
-// $check = $validate->validateSignUp($email,$password);
-// if($check===true){
-
-// }
-
-// $exists = $site->checkEmail($email);
-// if($check===true){
-// errormsg("Email address already in use.");
-// }
 
 try{
 	$protectPass = (md5($password));
@@ -52,62 +48,4 @@ try{
 }catch(PDOException $e){
 	errormsg($e->getMessage());
  }
-
-
-
-
-// class PDB{
-
-
-// // public $db = null;
-
-// public function start(){
-
-
-
-// try{
-// 	$this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-// }catch(PDOException $e){
-// 	errormsg($e->getMessage());
-// }
-
-// }
-
-// };
-
-
-
-//$dbh = new PDB();
-//$db = $dbh->db;
-
-// $site = new Site($db);
-
-// $exists = $site->checkName($username);
-// if($exists===true){
-// errormsg("Username already exists.");
-// }
-
-// $exists = $site->checkEmail($email);
-// if($exists===true){
-// errormsg("Email address already in use.");
-// }
-
-
-//$hashed = $site->hasher($username, $password);
-
-// //$lastid = $st->fetch();
-
-// //$user = $dbh->getUser($lastid[0]);
-
-
-// }catch (PDOException $e){
-// errormsg($e->getMessage());
-// }
-
-// session_start();
-// session_regenerate_id(false);
-
-// $_SESSION["user"] = $user->id;
-
-// exitjson(array("user"=>$user));
 ?>
