@@ -31,16 +31,60 @@ var loadLanding = function() {
 			loadResults(search);
 		});
 
-			$('#signup').on('click', function(e) {
-			console.log('clicks');
+		$('#signup').on('click', function(e) {
+			//console.log('clicks');
 			e.preventDefault();
 			loadRegister();
+		});
+
+		$('#login').on('click', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadLogin();
 		});
 
 	});
 };
 
 loadLanding();
+
+var loadLoggedIn = function(userID,userName) {
+	console.log(userID);
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var loggedIn = $(htmlArg).find('#loggedIn').html();
+		$.template('loggedIntemplate', loggedIn);
+
+		var html = $.render('', 'loggedIntemplate');
+
+		$('#wrap').append(html);
+
+		$('#enter').on('click', function(e) {
+			//console.log('clicks');
+			e.preventDefault();
+			var search = $('#user_search').val();
+			loadResults(search);
+		});
+
+		$('#signup').on('click', function(e) {
+			//console.log('clicks');
+			e.preventDefault();
+			loadRegister();
+		});
+
+		$('#login').on('click', function(e) {
+			//console.log('clicks');
+			e.preventDefault();
+			loadLogin();
+		});
+
+		$('#space').html('<p>Welcome, ' + userName + '</p>' );
+
+	});
+};
 
 //----------------------------------------------------- Register -------------------------------------------------------------------------//
 var loadRegister = function(){
@@ -78,23 +122,33 @@ var register = function() {
 	type : 'post',
 	dataType : 'json',
 	success : function(response) {
-	if (response.user) {
-	console.log(response);
-	//loadLanding();
+	if (response.username) {
+	console.log(response.username);
+	console.log("hey");
+	var userID = response.username.id;
+	var userName = response.username.username;
+	loadLoggedIn(userID,userName);
 	} else {
 	console.log(response);
-	//$('#email_error').append(response.error);
 	if(response.error == "Not a valid Email Address"){
 		$('#email_error').append(response.error);
+		// $("#pwd_error").css("display","none");
+		// $("#error").css("display","none");
 	}
 	if(response.error == "Email already exists"){
 		$('#email_error').append(response.error);
+		// $("#pwd_error").css("display","none");
+		// $("#error").css("display","none");
 	}
 	if(response.error == "Password must be at least 8 to 15 characters"){
 		$('#pwd_error').append(response.error);
+		$("#email_error").css("display","none");
+		$("#error").css("display","none");
 	}
 	if(response.error == "Username already exists"){
 		$('#error').append(response.error);
+		$("#email_error").css("display","none");
+		// $("#pwd_error").css("display","none");
 	}
 
 	}
@@ -105,6 +159,61 @@ var register = function() {
 	return false;
 };
 
+
+//----------------------------------------------------- Login -------------------------------------------------------------------------//
+var loadLogin = function(){
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var login = $(htmlArg).find('#login').html();
+		$.template('logintemplate', login);
+
+		var html = $.render('', 'logintemplate');
+
+	$('#wrap').append(html);
+
+	$('#login_btn').on('click', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loginUser();
+	});
+});
+};
+
+var loginUser = function() {
+	var user = $('#login_user').val();
+	var pass = $('#login_pass').val();
+
+	$.ajax({
+		url : 'php/login.php',
+		data : {
+		username : user,
+		password : pass,
+	},
+	type : 'post',
+	dataType : 'json',
+	success : function(response) {
+	if (response.user) {
+	console.log(response);
+	console.log("logged in");
+	//loadLanding();
+	} else {
+	console.log(response);
+	//$('#email_error').append(response.error);
+	if(response.error == "Invalid Login"){
+		$('#login_error').append(response.error);
+	}
+
+
+	}
+	}
+	//return false;
+	});
+
+	return false;
+};
 
 
 // ------------------------------------------------------ Results ------------------------------------------------------------------------//

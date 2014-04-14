@@ -65,6 +65,45 @@ body {
   width: 119px;
   border-radius: 3px; }
 
+#menu {
+  float: right;
+  margin: 4px 10px 0 0; }
+
+nav {
+  display: none;
+  background-color: #F4F4F4;
+  margin: 33px -40px 0 0; }
+
+input[type=checkbox]:checked ~ nav {
+  display: block;
+  position: relative;
+  z-index: 1;
+  margin-top: -10px;
+  float: right;
+  width: 200px; }
+
+input[type=checkbox] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px; }
+
+label {
+  display: block;
+  /*background: #eb6e1f;*/
+  padding: 5px; }
+
+ul {
+  list-style-type: none;
+  font-family: arial;
+  /*margin-left: 10px;
+  text-align: center;*/ }
+  ul li {
+    padding-bottom: 3px;
+    padding-top: 3px; }
+  ul a {
+    text-decoration: none;
+    color: #4b4c4c; }
+
 /*------------------------------------Login/SignUp Page------------------------*/
 fieldset {
   border: none; }
@@ -106,6 +145,11 @@ fieldset {
   color: #f00;
   font-size: 12px;
   margin-right: 35px; }
+
+#login_error {
+  color: #f00;
+  font-size: 12px;
+  margin: -10px 185px 10px 0; }
 
 /*--------------------------------------Results Page--------------------------------*/
 .logo {

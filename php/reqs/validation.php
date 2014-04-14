@@ -7,24 +7,71 @@ public $db = null;
 public function __construct($dbref){
 
 $this->db = $dbref;
+// 	try{
+// //$this->db = new PDO("mysql:host=$this->dbhost;port=$this->dbport;dbname=$this->dbname", $this->dbuser, $this->dbpass);
+// $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
+// }catch (PDOException $e){
+// errormsg($e->getMessage());
+
+// }
+
+
 
 }
 
-public function getLogin(){
+public function checkUser($data){
+session_start();
+//$db = new PDO("mysql:hostname=localhost;dbname=ssl","root","root");
 
-	$email = $_POST["username_login"];
-	$password = $_POST["password_login"];
-	$email_match = '/^[a-zA-Z]+[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/';
-	$password_match = '/^[a-zA-Z]\w{7,14}$/';
+$q = "select username, password from users where username = :un and password = :pass";
+
+$st = $this->db->prepare($q);
+
+$st->execute(array(":un"=>$data["un"], ":pass"=>$data["pass"]));
+
+$st->fetchAll();
+$isgood = $st->rowCount();
+
+if($isgood > 0){
+$_SESSION["loggedin"] = 1;
+return 1;
+}else{
+$_SESSION["loggedin"] = 0;
+
+return 0;
+}
 
 
-	if(preg_match($email_match, $email) && preg_match($password_match, $password)){
-	return true;
-	}else{
-	//$loginErr = '*You put in the wrong information please try again';
-	return false;
+}
 
-	}
+public function getLogin($userid){
+
+	// $email = $_POST["username_login"];
+	// $password = $_POST["password_login"];
+	// $email_match = '/^[a-zA-Z]+[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/';
+	// $password_match = '/^[a-zA-Z]\w{7,14}$/';
+
+
+	// if(preg_match($email_match, $email) && preg_match($password_match, $password)){
+	// return true;
+	// }else{
+	// //$loginErr = '*You put in the wrong information please try again';
+	// return false;
+
+	// }
+
+		$sql = "Select * from users where id= :id";
+		//echo "run";
+		$st = $dbs->prepare($sql);
+		//echo "work";
+
+		$st->execute(array(":id"=>$userid));
+		//echo "runner";
+		//"select name from users";
+
+		$obj = $st->fetchAll();
+		return $obj;
 
 
 }
@@ -111,6 +158,30 @@ errormsg($e->getMessage());
 }
 
 return $check;
+
+}
+
+public function getUser($userID){
+
+try{
+$st = $this->db->prepare("
+SELECT id, username, email, password
+FROM users
+WHERE users.id = :user
+");
+$st->execute(array(
+":user"=>$userID
+));
+
+}catch (PDOException $e){
+errormsg($e->getMessage());
+}
+
+$st->setFetchMode(PDO::FETCH_OBJ);
+
+$user = $st->fetch();
+
+return $user;
 
 }
 

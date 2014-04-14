@@ -97,3 +97,58 @@
 
 
 	</script><!-- Sign Up Page -->
+
+	<script type="text/template" id="login">
+
+		<header>
+			<div id="space">
+				<div id="arrow">
+	        		<img src="images/arrow.png" style="margin-top:7px;">
+	        	</div>
+	        	<div id="back">
+	        	</div>
+	        </div>
+    	</header>
+
+    	<div id="home">
+	    	<h2 id="celiac" style="margin-top:80px;">Celiac Tracker</h2>
+	    	<fieldset>
+	    		<input type="text" placeholder="Username" class="member" id="login_user">
+	    	</fieldset>
+	    	<fieldset>
+	    		<input type="text" placeholder="Password" class="member" id="login_pass">
+	    		<div id="login_error"></div>
+	    	</fieldset>
+	    	<button class="member_btn" id="login_btn">Login</button>
+    	</div><!--home-->
+
+	</script>
+
+	<script type="text/template" id="loggedIn">
+
+		<header>
+			<div id="space">
+			<input type="checkbox" id="clicker">
+			<label for="clicker"><img src="images/menu.png" id="menu"></label>
+			<nav>
+				<ul>
+					<li><a href="#/transit">Bookmarks</a></li>
+					<li><a href="#/courses">Search History</a></li>
+					<li><a href="#/social">Logout</a></li>
+				</ul>
+			</nav>
+			<!--<img src="images/menu.png">-->
+	        </div>
+	    </header>
+
+	    <div id="home">
+		    	<img id="home_logo" src="images/logo.png">
+		    	<h2 id="celiac">Celiac Tracker</h2>
+		    	<!-- <img src="images/enter.png"> -->
+		    	<input type="text" placeholder="Search for Product" id="user_search">
+		    	<input type="submit" id="enter" value="Submit">
+		    	<p><a href="http://celiac.org/" id="webpage">Learn more about Celiac Disease</a></p>
+
+	    	</div> <!--home-->
+
+    </script>

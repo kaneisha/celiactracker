@@ -4,7 +4,7 @@ $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-//error_reporting(E_ALL);
+error_reporting(E_ALL);
 require_once("reqs/validation.php");
 require_once("reqs/common.php");
 
@@ -45,7 +45,20 @@ try{
 
 	$st = $db->prepare("SELECT LAST_INSERT_ID()");
 	$st->execute();
+
+	$lastid = $st->fetch();
+
+	$username = $validate->getUser($lastid[0]);
+
+
 }catch(PDOException $e){
 	errormsg($e->getMessage());
  }
+
+session_start();
+session_regenerate_id(false);
+
+$_SESSION["username"] = $username->id;
+
+exitjson(array("username"=>$username));
 ?>
