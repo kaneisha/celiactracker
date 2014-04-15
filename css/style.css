@@ -8,6 +8,12 @@ body {
 #space {
   background-image: url(../images/gradientb.png);
   height: 43px; }
+  #space p {
+    color: #fcfcfc;
+    font-family: garamond;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-left: 8px; }
 
 #home_logo {
   width: 100%;
@@ -67,7 +73,7 @@ body {
 
 #menu {
   float: right;
-  margin: 4px 10px 0 0; }
+  margin: -25px 10px 0 0; }
 
 nav {
   display: none;

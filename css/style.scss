@@ -19,6 +19,14 @@ body{
 #space{
 	background-image: url(../images/gradientb.png);
 	height: 43px;
+
+	p{
+		color: $bg;
+		font-family: garamond;
+		font-weight: bold;
+		padding-top: 10px;
+		padding-left: 8px;
+	}
 }
 
 #home_logo{
@@ -87,7 +95,7 @@ body{
 
 #menu{
 	float: right;
-	margin: 4px 10px 0 0;
+	margin: -25px 10px 0 0;
 }
 
 nav{

@@ -10,6 +10,27 @@ var onPress = function(e){
 
 window.addEventListener('keydown', onPress);
 
+var loginCheck = function() {
+	$.ajax({
+		url : 'php/loginCheck.php',
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			if (response.username) {
+				console.log('user exists');
+				userID = response.username.id;
+				userName = response.username.username;
+				loadLoggedIn(userID,userName);
+			} else {
+				console.log('go home');
+				loadLanding();
+			}
+		}
+	});
+};
+
+loginCheck();
+
 var loadLanding = function() {
 	// console.log("hey");
 	$('#wrap').empty();
@@ -51,7 +72,7 @@ loadLanding();
 var loadLoggedIn = function(userID,userName) {
 	console.log(userID);
 	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
+	$.get('templates/template.html?4', function(htmlArg) {
 
 		landingTemplate = htmlArg;
 
@@ -81,7 +102,15 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-		$('#space').html('<p>Welcome, ' + userName + '</p>' );
+		$('#space').html('<p>Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
+				<nav>\
+				<ul>\
+					<li><a href="#/transit">Bookmarks</a></li>\
+					<li><a href="#/courses">Search History</a></li>\
+					<li><a href="#/social">Logout</a></li>\
+				</ul>\
+			</nav>' );
 
 	});
 };
@@ -199,6 +228,9 @@ var loginUser = function() {
 	console.log(response);
 	console.log("logged in");
 	//loadLanding();
+	var userID = response.username.id;
+	var userName = response.username.username;
+	loadLoggedIn(userID,userName);
 	} else {
 	console.log(response);
 	//$('#email_error').append(response.error);
