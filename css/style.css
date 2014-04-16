@@ -8,12 +8,13 @@ body {
 #space {
   background-image: url(../images/gradientb.png);
   height: 43px; }
-  #space p {
-    color: #fcfcfc;
-    font-family: garamond;
-    font-weight: bold;
-    padding-top: 10px;
-    padding-left: 8px; }
+
+#welcome {
+  color: #fcfcfc;
+  font-family: garamond;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-left: 8px; }
 
 #home_logo {
   width: 100%;
@@ -197,6 +198,9 @@ fieldset {
     color: #4b4c4c;
     font-family: helvetica; }
 
+.brand {
+  padding-top: 0; }
+
 /*---------------------------- Product Page ------------------------------------*/
 .api {
   float: right; }
@@ -219,8 +223,8 @@ h2 {
   height: 2px;
   background-color: #c5c6c2;
   border-radius: 2px;
-  margin: 9px 0 23px 10px;
-  width: 260px; }
+  margin: 9px 0 23px 50px;
+  width: 270px; }
 
 #statement {
   font-family: arial;

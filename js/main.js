@@ -1,4 +1,5 @@
 var landingTemplate;
+var appTemplate;
 
 var onPress = function(e){
       	//console.log(e);
@@ -67,14 +68,15 @@ var loadLanding = function() {
 	});
 };
 
-loadLanding();
+//loadLanding();
 
 var loadLoggedIn = function(userID,userName) {
 	console.log(userID);
 	$('#wrap').empty();
-	$.get('templates/template.html?4', function(htmlArg) {
+	console.log('run');
+	$.get('templates/template.html', function(htmlArg) {
 
-		landingTemplate = htmlArg;
+		appTemplate = htmlArg;
 
 		var loggedIn = $(htmlArg).find('#loggedIn').html();
 		$.template('loggedIntemplate', loggedIn);
@@ -102,13 +104,19 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-		$('#space').html('<p>Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
+		$('#logout').on('click', function(e) {
+			//console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
 				<ul>\
-					<li><a href="#/transit">Bookmarks</a></li>\
-					<li><a href="#/courses">Search History</a></li>\
-					<li><a href="#/social">Logout</a></li>\
+					<li><a href="">Bookmarks</a></li>\
+					<li><a href="">Search History</a></li>\
+					<li><a id="logout">Logout</a></li>\
 				</ul>\
 			</nav>' );
 
@@ -366,7 +374,7 @@ var getProduct = function(item){
 
 $('#statement').wrapInTag({
   tag: 'strong',
-  words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free']
+  words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
 });
 
 
