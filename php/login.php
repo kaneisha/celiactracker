@@ -1,5 +1,8 @@
 <?php
 
+$username = $_POST['username'];
+$password = $_POST['password'];
+
 require_once("reqs/validation.php");
 require_once("reqs/common.php");
 
@@ -9,6 +12,7 @@ $validate = new Validate($db);
 
 $data = array("un"=>$_POST["username"],"pass"=>md5($_POST["password"]));
 $test = $validate->checkUser($data);
+//$test = $validate->getUser($userID);
 //$msg="Invalid Login";
 
 
@@ -16,30 +20,11 @@ if($test != 1){
 	errormsg("Invalid Login");
 }
 
-//$validate = new Validate($db);
+session_start();
+session_regenerate_id(false);
 
-// try{
-// 	$sql = "Select * from users where id= :id";
-// 		//echo "run";
-// 	$st = $db->prepare($sql);
-// 		//echo "work";
+$_SESSION["username"] = $username->id;
 
-// 	$st->execute(array(":id"=>$userid));
-// 		//echo "runner";
-// 		//"select name from users";
-
-// 	$obj = $st->fetchAll();
-// 	return $obj;
-// }catch(PDOException $e){
-// 	errormsg($e->getMessage());
-// }
-
-// $st->setFetchMode(PDO::FETCH_OBJ);
-
-// $row = $st->fetch();
-
-// if($st->rowCount() == 0){
-// errormsg("Username or password incorrect.");
-// };
+exitjson(array("username"=>$username));
 
 

@@ -239,7 +239,7 @@ var loginUser = function() {
 	type : 'post',
 	dataType : 'json',
 	success : function(response) {
-	if (response.user) {
+	if (response.username) {
 	console.log(response);
 	console.log("logged in");
 	//loadLanding();
