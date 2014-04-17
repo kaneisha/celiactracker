@@ -227,35 +227,40 @@ var loadLogin = function(){
 };
 
 var loginUser = function() {
+
+
 	var user = $('#login_user').val();
 	var pass = $('#login_pass').val();
 
+	console.log(user, pass, "login running");
+
 	$.ajax({
 		url : 'php/login.php',
+		type : 'post',
+		dataType : 'json',
 		data : {
-		username : user,
-		password : pass,
-	},
-	type : 'post',
-	dataType : 'json',
-	success : function(response) {
-	if (response.username) {
-	console.log(response);
-	console.log("logged in");
-	//loadLanding();
-	var userID = response.username.id;
-	var userName = response.username.username;
-	loadLoggedIn(userID,userName);
-	} else {
-	console.log(response);
-	//$('#email_error').append(response.error);
-	if(response.error == "Invalid Login"){
-		$('#login_error').append(response.error);
-	}
+			username : user,
+			password : pass
+		},
+		success : function(response) {
 
-
-	}
-	}
+		console.log(response, user, pass, "hello? success");
+		if (response) {
+			console.log("logged in");
+			//loadLanding();
+			var userID = response.username.id;
+			var userName = response.username.username;
+			loadLoggedIn(userID,userName);
+		} else {
+			console.log(response, user, pass);
+			if(response.error == "Invalid Login"){
+				$('#login_error').append(response.error);
+			}
+		}
+		},
+		error: function(response){
+			console.log(response, user, pass, "hello? error");
+		}//success
 	//return false;
 	});
 

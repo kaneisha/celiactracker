@@ -24,7 +24,8 @@ public function checkUser($data){
 //session_start();
 //$db = new PDO("mysql:hostname=localhost;dbname=ssl","root","root");
 
-$q = "select username, password from users where username = :un and password = :pass";
+$q = "select username, password from users where users.id = :un and password = :pass";
+//users.id = :user
 
 $st = $this->db->prepare($q);
 
