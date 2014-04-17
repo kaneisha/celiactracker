@@ -21,7 +21,7 @@ $this->db = $dbref;
 }
 
 public function checkUser($data){
-session_start();
+//session_start();
 //$db = new PDO("mysql:hostname=localhost;dbname=ssl","root","root");
 
 $q = "select username, password from users where username = :un and password = :pass";

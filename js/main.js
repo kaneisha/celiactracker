@@ -105,7 +105,7 @@ var loadLoggedIn = function(userID,userName) {
 		});
 
 		$('#logout').on('click', function(e) {
-			//console.log('clicks');
+			console.log('clicks');
 			e.preventDefault();
 			logout();
 		});
@@ -114,14 +114,21 @@ var loadLoggedIn = function(userID,userName) {
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
 				<ul>\
-					<li><a href="">Bookmarks</a></li>\
-					<li><a href="">Search History</a></li>\
-					<li><a id="logout">Logout</a></li>\
+					<li>Bookmarks</li>\
+					<li>Search History</li>\
+					<li id="logout">Logout</li>\
 				</ul>\
 			</nav>' );
 
 	});
 };
+
+// var logout = function() {
+// $.get('php/logout.php', function() {
+// window.location.replace("http://localhost:8888");
+// });
+// return false;
+// };
 
 //----------------------------------------------------- Register -------------------------------------------------------------------------//
 var loadRegister = function(){
@@ -255,6 +262,13 @@ var loginUser = function() {
 	return false;
 };
 
+// ------------------------------------------------------ Logout ------------------------------------------------------------------------//
+var logout = function() {
+$.get('php/logout.php', function() {
+window.location.replace("http://localhost:8888");
+});
+return false;
+};
 
 // ------------------------------------------------------ Results ------------------------------------------------------------------------//
 var loadResults = function(search){
