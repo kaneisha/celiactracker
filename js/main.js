@@ -326,10 +326,6 @@ var getResults = function(api){
     });
 };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of ca3bca2... finished product member view
 //--------------------------------------------------------- Product ------------------------------------------------------------------------//
 
 var loadProduct = function(item){
@@ -399,5 +395,6 @@ $('#statement').wrapInTag({
   words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
 });
 
-
 });
+
+};
