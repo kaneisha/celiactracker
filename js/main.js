@@ -89,7 +89,7 @@ var loadLoggedIn = function(userID,userName) {
 			//console.log('clicks');
 			e.preventDefault();
 			var search = $('#user_search').val();
-			loadMemberResults(search);
+			loadResults(search);
 		});
 
 		$('#signup').on('click', function(e) {
@@ -104,7 +104,7 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-		$('li#logout_link').on('click', function(e) {
+		$('#logout').on('click', function(e) {
 			console.log('clicks');
 			e.preventDefault();
 			logout();
@@ -116,7 +116,7 @@ var loadLoggedIn = function(userID,userName) {
 				<ul>\
 					<li>Bookmarks</li>\
 					<li>Search History</li>\
-					<li id="logout_link">Logout</li>\
+					<li id="logout">Logout</li>\
 				</ul>\
 			</nav>' );
 
@@ -326,6 +326,10 @@ var getResults = function(api){
     });
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of ca3bca2... finished product member view
 //--------------------------------------------------------- Product ------------------------------------------------------------------------//
 
 var loadProduct = function(item){
