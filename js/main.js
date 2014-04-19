@@ -326,67 +326,6 @@ var getResults = function(api){
     });
 };
 
-var loadMemberResults = function(search){
-
-	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
-
-		landingTemplate = htmlArg;
-
-		var memberresultslist = $(htmlArg).find('#results').html();
-		$.template('memberresultstemplate', memberresultslist);
-
-		var html = $.render('', 'memberresultstemplate');
-
-	$('#wrap').append(html);
-
-	var api = "http://api.nutritionix.com/v1/search/" + search + "?results=0:21&fields=item_name,brand_name,item_id,nf_ingredient_statement&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
-
-	getMemberResults(api);
-});
-};
-
-
-var getMemberResults = function(api){
-	  $.getJSON( api, {
-	    // tags: "mount rainier",
-	    // tagmode: "any",
-	    format: "json"
-	  })
-    .done(function( data ) {
-      console.log(data);
-       $('#counter').append('<p>' + data.hits.length + ' results found </p>');
-
-
-      for(var i = 0; i < data.hits.length; i++){
-        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div id="line"></div>');
-
-      }
-
-      $('#list p').on('click', function(e){
-      	e.preventDefault();
-      	// console.log('clicker');
-      	var itemid = ($(this).attr("data-id"));
-      	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
-      	// console.log(itemid);
-      	loadProduct(item);
-      })
-
-      	$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
-			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
-				<nav>\
-				<ul>\
-					<li>Bookmarks</li>\
-					<li>Search History</li>\
-					<li id="logout_link">Logout</li>\
-				</ul>\
-			</nav>' );
-
-
-    });
-};
-
-
 //--------------------------------------------------------- Product ------------------------------------------------------------------------//
 
 var loadProduct = function(item){
@@ -439,9 +378,9 @@ var getProduct = function(item){
       	$('#gluten').html('This product does not contain Gluten');
       }
 
-      $.fn.wrapInTag = function(opts) {
+$.fn.wrapInTag = function(opts) {
 
-  var tag = opts.tag || 'strong',
+	var tag = opts.tag || 'strong',
       words = opts.words || [],
       regex = RegExp(words.join('|'), 'gi'), //case insensitive
       replacement = '<'+ tag +'>$&</'+ tag +'>';
@@ -457,7 +396,4 @@ $('#statement').wrapInTag({
 });
 
 
-    });
-
-
-}
+});
