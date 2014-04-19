@@ -43,6 +43,8 @@ try{
 			":pass"=>$protectPass
 		));
 
+
+
 	$st = $db->prepare("SELECT LAST_INSERT_ID()");
 	$st->execute();
 

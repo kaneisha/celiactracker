@@ -89,7 +89,7 @@ var loadLoggedIn = function(userID,userName) {
 			//console.log('clicks');
 			e.preventDefault();
 			var search = $('#user_search').val();
-			loadResults(search);
+			loadMemberResults(search);
 		});
 
 		$('#signup').on('click', function(e) {
@@ -104,7 +104,7 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-		$('#logout').on('click', function(e) {
+		$('li#logout_link').on('click', function(e) {
 			console.log('clicks');
 			e.preventDefault();
 			logout();
@@ -116,7 +116,7 @@ var loadLoggedIn = function(userID,userName) {
 				<ul>\
 					<li>Bookmarks</li>\
 					<li>Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="logout_link">Logout</li>\
 				</ul>\
 			</nav>' );
 
@@ -321,6 +321,66 @@ var getResults = function(api){
       	// console.log(itemid);
       	loadProduct(item);
       })
+
+
+    });
+};
+
+var loadMemberResults = function(search){
+
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var memberresultslist = $(htmlArg).find('#results').html();
+		$.template('memberresultstemplate', memberresultslist);
+
+		var html = $.render('', 'memberresultstemplate');
+
+	$('#wrap').append(html);
+
+	var api = "http://api.nutritionix.com/v1/search/" + search + "?results=0:21&fields=item_name,brand_name,item_id,nf_ingredient_statement&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
+
+	getMemberResults(api);
+});
+};
+
+
+var getMemberResults = function(api){
+	  $.getJSON( api, {
+	    // tags: "mount rainier",
+	    // tagmode: "any",
+	    format: "json"
+	  })
+    .done(function( data ) {
+      console.log(data);
+       $('#counter').append('<p>' + data.hits.length + ' results found </p>');
+
+
+      for(var i = 0; i < data.hits.length; i++){
+        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div id="line"></div>');
+
+      }
+
+      $('#list p').on('click', function(e){
+      	e.preventDefault();
+      	// console.log('clicker');
+      	var itemid = ($(this).attr("data-id"));
+      	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
+      	// console.log(itemid);
+      	loadProduct(item);
+      })
+
+      	$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
+				<nav>\
+				<ul>\
+					<li>Bookmarks</li>\
+					<li>Search History</li>\
+					<li id="logout_link">Logout</li>\
+				</ul>\
+			</nav>' );
 
 
     });
