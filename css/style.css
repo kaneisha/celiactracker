@@ -76,6 +76,14 @@ body {
   float: right;
   margin: -25px 10px 0 0; }
 
+#menutwo {
+  float: right;
+  margin: -29px 10px 0 0; }
+
+#menuthree {
+  float: right;
+  margin: -45px 10px 0 0; }
+
 nav {
   display: none;
   background-color: #F4F4F4;
@@ -233,3 +241,13 @@ h2 {
   font-size: 15px;
   margin-bottom: 15px;
   margin-top: 5px; }
+
+#gluten_free {
+  margin-top: 35px;
+  text-align: center;
+  float: left; }
+
+#not_gluten {
+  /*background-image: url(../images/gradientb.png);*/
+  text-align: center;
+  float: right; }
