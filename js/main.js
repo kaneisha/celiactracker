@@ -2,7 +2,6 @@ var landingTemplate;
 var appTemplate;
 
 var onPress = function(e){
-      	//console.log(e);
       	if(e.keyCode == 13){
       		var search = $('.result_search').val();
 			loadResults(search);
@@ -499,6 +498,9 @@ var getMemberProduct = function(item){
       }else if(data.nf_ingredient_statement.indexOf("Oats") > -1){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("Wheat") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
       }else{
       	$('#gluten').html('This product does not contain Gluten');
       }
@@ -525,19 +527,18 @@ $('#statement').wrapInTag({
 $('#gluten_free').on('click', function(e) {
 			//console.log('clicks');
 			e.preventDefault();
-			glutenBookmark(item);
+			glutenFreeBookmark(item);
 		});
 
 };
 
 //--------------------------------------------------------- Bookmark ------------------------------------------------------------------//
-var glutenBookmark = function(item){
+var glutenFreeBookmark = function(item){
 	$.getJSON( item, {
 	    format: "json"
 	  })
 
 	.done(function( data ) {
-
 		$.ajax({
 		url : 'php/bookmarks.php',
 		data : {
@@ -547,7 +548,7 @@ var glutenBookmark = function(item){
 		type : 'post',
 		dataType : 'json',
 		success : function(response) {
-			if (response.username) {
+			if (response) {
 				console.log('bookmarked');
 			} else {
 				console.log('did not work');

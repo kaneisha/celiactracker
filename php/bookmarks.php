@@ -1,9 +1,18 @@
 <?php
+session_start();
 
 $name = $_POST['name'];
 $ingredients = $_POST['ingredients'];
 
-// require_once("reqs/validation.php");
+// var_dump($_SESSION['username']);
+// exit;
+
+// $name = 'test name';
+// $ingredients = 'test ingredients';
+
+// $user = $_POST['user'];
+
+// require_once("login.php");
 require_once("reqs/common.php");
 
 $db = new PDO("mysql:hostname=localhost;dbname=celiactracker","root","root");
@@ -11,13 +20,14 @@ $db = new PDO("mysql:hostname=localhost;dbname=celiactracker","root","root");
 
 try{
 	$st = $db->prepare(
-		"INSERT INTO glutenfree(name, ingredients)
-		VALUES (:name, :ings)"
+		"INSERT INTO glutenfree (name, ingredients, user_id)
+		VALUES (:name, :ings, :user)"
 	);
 
 	$st->execute(array(
 			":name"=>$name,
-			":ings"=>$ingredients
+			":ings"=>$ingredients,
+			":user"=>$_SESSION['username']
 		));
 
 
