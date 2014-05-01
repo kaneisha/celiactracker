@@ -572,7 +572,7 @@ var glutenBookmark = function(item){
 		$.ajax({
 		url : 'php/gluten.php',
 		data : {
-			name: data.item_name,
+			item: data.item_name,
 			ingredients: data.nf_ingredient_statement
 		},
 		type : 'post',

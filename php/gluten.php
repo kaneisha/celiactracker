@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$name = $_POST['name'];
+$item = $_POST['item'];
 $ingredients = $_POST['ingredients'];
 
 require_once("reqs/common.php");
@@ -15,7 +15,7 @@ try{
 	);
 
 	$st->execute(array(
-			":name"=>$name,
+			":name"=>$item,
 			":ings"=>$ingredients,
 			":user"=>$_SESSION['username']
 		));
