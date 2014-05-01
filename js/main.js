@@ -528,11 +528,16 @@ $('#gluten_free').on('click', function(e) {
 			//console.log('clicks');
 			e.preventDefault();
 			glutenFreeBookmark(item);
-		});
+});
+$('#not_gluten').on('click', function(e) {
+			//console.log('clicks');
+			e.preventDefault();
+			glutenBookmark(item);
+});
 
 };
 
-//--------------------------------------------------------- Bookmark ------------------------------------------------------------------//
+//--------------------------------------------------------- Bookmarks ------------------------------------------------------------------//
 var glutenFreeBookmark = function(item){
 	$.getJSON( item, {
 	    format: "json"
@@ -540,7 +545,32 @@ var glutenFreeBookmark = function(item){
 
 	.done(function( data ) {
 		$.ajax({
-		url : 'php/bookmarks.php',
+		url : 'php/glutenfree.php',
+		data : {
+			name: data.item_name,
+			ingredients: data.nf_ingredient_statement
+		},
+		type : 'post',
+		dataType : 'json',
+		success : function(response) {
+			if (response) {
+				console.log('bookmarked');
+			} else {
+				console.log('did not work');
+			}
+		}
+	});
+	}); // Done Statement
+}
+
+var glutenBookmark = function(item){
+	$.getJSON( item, {
+	    format: "json"
+	  })
+
+	.done(function( data ) {
+		$.ajax({
+		url : 'php/gluten.php',
 		data : {
 			name: data.item_name,
 			ingredients: data.nf_ingredient_statement
