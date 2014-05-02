@@ -72,7 +72,7 @@ var loadLanding = function() {
 var loadLoggedIn = function(userID,userName) {
 	console.log(userID);
 	$('#wrap').empty();
-	console.log('run');
+	//console.log('run');
 	$.get('templates/template.html', function(htmlArg) {
 
 		appTemplate = htmlArg;
@@ -103,7 +103,7 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-		$('#logout').on('click', function(e) {
+		$(document).on('click', '#logout', function(e) {
 			console.log('clicks');
 			e.preventDefault();
 			logout();
@@ -224,7 +224,7 @@ var loginUser = function() {
 	var user = $('#login_user').val();
 	var pass = $('#login_pass').val();
 
-	console.log(user, pass, "login running");
+	// console.log(user, pass, "login running");
 
 	$.ajax({
 		url : 'php/login.php',
@@ -476,7 +476,7 @@ var getMemberProduct = function(item){
 	  })
 
     .done(function( data ) {
-      console.log(data);
+      //console.log(data);
       $('#statement').append(data.nf_ingredient_statement);
       $('h2').append(data.item_name);
 
@@ -526,7 +526,10 @@ $('#statement').wrapInTag({
 
 $('#gluten_free').on('click', function(e) {
 			//console.log('clicks');
+			$('#buttons').css("display","none");
 			e.preventDefault();
+			// $('#buttons').append('<p>Has been added to your bookmarks!</p>');
+			// $('#buttons').css("display","none");
 			glutenFreeBookmark(item);
 });
 $('#not_gluten').on('click', function(e) {
@@ -554,10 +557,14 @@ var glutenFreeBookmark = function(item){
 		dataType : 'json',
 		success : function(response) {
 			if (response) {
-				console.log('bookmarked');
+				// console.log('bookmarked');
+				// $('#buttons').css("display","none");
+				$('#buttons').append('<p>Has been added to your bookmarks!</p>');
 			} else {
 				console.log('did not work');
 			}
+			// $('#buttons').css("display","none");
+			//$('#buttons').append('<p>Has been added to your bookmarks!</p>');
 		}
 	});
 	}); // Done Statement
