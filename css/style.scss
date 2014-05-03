@@ -235,7 +235,7 @@ fieldset{
 	margin-top: 6px;
 }
 
-#line{
+.line{
 	height: 2px;
 	background-color: $line;
 	/*width: 288px;*/
@@ -305,4 +305,15 @@ h2{
   /*background-image: url(../images/gradientb.png);*/
   text-align: center;
   float: right;
+}
+/*---------------------------- Bookmarks Page ------------------------------------*/
+#bookmarklist{
+	margin-top: 30px;
+
+	p{
+		margin-left: 15px;
+		margin-bottom: 15px;
+		color: $list;
+		font-family: helvetica;
+	}
 }

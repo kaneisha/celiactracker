@@ -357,7 +357,7 @@ var getMemberResults = function(api){
 
 
       for(var i = 0; i < data.hits.length; i++){
-        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div id="line"></div>');
+        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div class="line"></div>');
 
       }
 
@@ -635,13 +635,23 @@ var getGlutenFreeList = function() {
 				console.log(response);
 				// console.log("hey");
 				 for(var i = 0; i < response.length; i++){
-		        	console.log(i);
+		        	console.log(response[i].ingredients);
+		        	$('#bookmarklist').append('<p data-id="'+ response[i].id + '">' + response[i].name + '</p> <div class="line"></div>');
 
 		      		}
+
+		      	     $('#bookmarklist p').on('click', function(e){
+				      	e.preventDefault();
+				      	// console.log('clicker');
+				      	var item = ($(this).attr("data-id"));
+				      	//var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
+				      	// console.log(itemid);
+				      	loadBookmarkProduct(item);
+				      });
 			}else{
 				console.log("no");
 			}
 
-		}
+		} // Success Function
 	});
 };
