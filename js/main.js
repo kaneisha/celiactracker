@@ -109,11 +109,17 @@ var loadLoggedIn = function(userID,userName) {
 			logout();
 		});
 
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
 		$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
 				<ul>\
-					<li>Bookmarks</li>\
+					<li id="books">Bookmarks</li>\
 					<li>Search History</li>\
 					<li id="logout">Logout</li>\
 				</ul>\
@@ -526,7 +532,10 @@ $('#statement').wrapInTag({
 
 $('#gluten_free').on('click', function(e) {
 			//console.log('clicks');
-			$('#buttons').css("display","none");
+			$('#gluten_free').css("display","none");
+			$('#not_gluten').css("display","none");
+			$('#buttons').append('<p>Has been added to your bookmarks!</p>');
+			$('#buttons p').css("color", "#6cb419");
 			e.preventDefault();
 			// $('#buttons').append('<p>Has been added to your bookmarks!</p>');
 			// $('#buttons').css("display","none");
@@ -559,7 +568,7 @@ var glutenFreeBookmark = function(item){
 			if (response) {
 				// console.log('bookmarked');
 				// $('#buttons').css("display","none");
-				$('#buttons').append('<p>Has been added to your bookmarks!</p>');
+				// $('#buttons').append('<p>Has been added to your bookmarks!</p>');
 			} else {
 				console.log('did not work');
 			}
@@ -594,3 +603,45 @@ var glutenBookmark = function(item){
 	});
 	}); // Done Statement
 }
+
+//--------------------------------------------------------- Bookmarks List ------------------------------------------------------------------//
+var loadGlutenFreeList = function(){
+
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var glutenfreelist = $(htmlArg).find('#gluten_list').html();
+		$.template('glutenlisttemplate', glutenfreelist);
+
+		var html = $.render('', 'glutenlisttemplate');
+
+	$('#wrap').append(html);
+
+	getGlutenFreeList();
+});
+};
+
+var getGlutenFreeList = function() {
+	console.log("go");
+	$.ajax({
+		url : '/php/glutenFreeList.php',
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			// console.log(response);
+			if(response){
+				console.log(response);
+				// console.log("hey");
+				 for(var i = 0; i < response.length; i++){
+		        	console.log(i);
+
+		      		}
+			}else{
+				console.log("no");
+			}
+
+		}
+	});
+};
