@@ -115,12 +115,18 @@ var loadLoggedIn = function(userID,userName) {
 			loadGlutenFreeList();
 		});
 
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
 		$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
 				<ul>\
 					<li id="books">Bookmarks</li>\
-					<li>Search History</li>\
+					<li id="history">Search History</li>\
 					<li id="logout">Logout</li>\
 				</ul>\
 			</nav>' );
@@ -368,6 +374,7 @@ var getMemberResults = function(api){
       	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
       	// console.log(itemid);
       	loadMemberProduct(item);
+      	addSearchHistory(item);
       });
 
       $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
@@ -814,6 +821,146 @@ var getGlutenProduct = function(item,pitem){
 };
 
 $('#glutenstatement').wrapInTag({
+  tag: 'strong',
+  words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
+});
+
+}
+
+//--------------------------------------------------------- Search History ------------------------------------------------------------------//
+var addSearchHistory = function(item){
+	$.getJSON( item, {
+	    format: "json"
+	  })
+
+	.done(function( data ) {
+		$.ajax({
+		url : 'php/searchHistory.php',
+		data : {
+			name: data.item_name,
+			ingredients: data.nf_ingredient_statement
+		},
+		type : 'post',
+		dataType : 'json',
+		success : function(response) {
+			if (response) {
+				console.log('it added');
+
+			} else {
+				console.log('did not work');
+			}
+		}
+	});
+	}); // Done Statement
+}
+
+var loadHistoryList = function(){
+
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var historylist = $(htmlArg).find('#sh_list').html();
+		$.template('historylisttemplate', historylist);
+
+		var html = $.render('', 'historylisttemplate');
+
+	$('#wrap').append(html);
+
+	getHistoryList();
+
+});
+};
+
+var getHistoryList = function() {
+	console.log("go");
+	$.ajax({
+		url : '/php/historyList.php',
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			// console.log(response);
+			if(response){
+				//console.log(response);
+				// console.log("hey");
+				 for(var i = 0; i < response.length; i++){
+		        	//console.log(response[i].ingredients);
+		        	$('#shlist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <div class="line"></div>');
+
+		      		}
+
+		      	     $('#shlist p').on('click', function(e){
+				      	e.preventDefault();
+				      	// console.log('clicker');
+				      	var item = ($(this).attr("data-id"));
+				      	var pitem = ($(this).attr("data-pid"));
+				      	// console.log(item);
+				      	// console.log(pitem);
+				      	loadHistoryProduct(item,pitem);
+				      });
+			}else{
+				console.log("no");
+			}
+
+		} // Success Function
+	});
+};
+
+var loadHistoryProduct = function(item,pitem){
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+	landingTemplate = htmlArg;
+
+	var historyproduct = $(htmlArg).find('#historyproduct').html();
+	$.template('historyproducttemplate', historyproduct);
+
+	var html = $.render('', 'historyproducttemplate');
+
+	$('#wrap').append(html);
+	// console.log(item,pitem);
+	getHistoryProduct(item,pitem);
+});
+};
+
+var getHistoryProduct = function(item,pitem){
+	console.log(item);
+	 $('#historystatement').append(item);
+     $('h2').append(pitem);
+
+     if(item.indexOf("WHEAT") > -1){
+      	$('#historygluten').css('color', 'red');
+      	$('#historygluten').html('This product contains Gluten');
+      }else if(item.indexOf("Rye") > -1){
+      	$('#historygluten').css('color', 'red');
+      	$('#historygluten').html('This product contains Gluten');
+      }else if(item.indexOf("Barley") > -1){
+      	$('#historygluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(item.indexOf("Oats") > -1){
+      	$('#historygluten').css('color', 'red');
+      	$('#historygluten').html('This product contains Gluten');
+      }else if(item.indexOf("Wheat") > -1){
+      	$('#historygluten').css('color', 'red');
+      	$('#historygluten').html('This product contains Gluten');
+      }else{
+      	$('#historygluten').html('This product does not contain Gluten');
+      }
+
+      $.fn.wrapInTag = function(opts) {
+
+	var tag = opts.tag || 'strong',
+      words = opts.words || [],
+      regex = RegExp(words.join('|'), 'gi'), //case insensitive
+      replacement = '<'+ tag +'>$&</'+ tag +'>';
+
+  	return this.html(function() {
+    return $(this).text().replace(regex, replacement);
+  });
+};
+
+$('#historystatement').wrapInTag({
   tag: 'strong',
   words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
 });

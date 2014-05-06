@@ -327,7 +327,54 @@ h2{
 	font-size: 15px;
 }
 
+#bookmarkgluten{
+	color: $green;
+	font-family: helvetica;
+	margin-bottom: 23px;
+	font-weight: bold;
+	text-align: center;
+	font-size: 15px;
+}
+
 #glutenfreestatement{
+	font-family: arial;
+	padding-left: 8px;
+	padding-right: 5px;
+	font-size: 15px;
+	margin-bottom: 15px;
+	margin-top: 5px;
+}
+
+#glutenstatement{
+	font-family: arial;
+	padding-left: 8px;
+	padding-right: 5px;
+	font-size: 15px;
+	margin-bottom: 15px;
+	margin-top: 5px;
+}
+/*---------------------------- Search History Page ------------------------------------*/
+#shlist{
+	margin-top: 30px;
+
+	p{
+		margin-left: 15px;
+		margin-bottom: 15px;
+		color: $list;
+		font-family: helvetica;
+	}
+}
+
+#historygluten{
+	color: $green;
+	font-family: helvetica;
+	margin-bottom: 23px;
+	font-weight: bold;
+	text-align: center;
+	font-size: 15px;
+}
+
+#historystatement{
 	font-family: arial;
 	padding-left: 8px;
 	padding-right: 5px;
