@@ -607,7 +607,7 @@ var glutenBookmark = function(item){
 	}); // Done Statement
 }
 
-//--------------------------------------------------------- Bookmarks List ------------------------------------------------------------------//
+//--------------------------------------------------------- Gluten Free Bookmarks List ------------------------------------------------------------------//
 var loadGlutenFreeList = function(){
 
 	$('#wrap').empty();
@@ -623,6 +623,10 @@ var loadGlutenFreeList = function(){
 	$('#wrap').append(html);
 
 	getGlutenFreeList();
+
+	$('#glutenbtn').on('click', function(e){
+		loadGlutenList();
+	});
 });
 };
 
@@ -699,5 +703,119 @@ var getGlutenFreeProduct = function(item,pitem){
       }else{
       	$('#bookmarkglutenfree').html('This product does not contain Gluten');
       }
+
+}
+
+//--------------------------------------------------------- Gluten Bookmarks List ------------------------------------------------------------------//
+var loadGlutenList = function(){
+
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var glutenfreelist = $(htmlArg).find('#gluten_list').html();
+		$.template('glutenlisttemplate', glutenfreelist);
+
+		var html = $.render('', 'glutenlisttemplate');
+
+	$('#wrap').append(html);
+
+	getGlutenList();
+
+});
+};
+
+var getGlutenList = function() {
+	console.log("go");
+	$.ajax({
+		url : '/php/glutenList.php',
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			// console.log(response);
+			if(response){
+				//console.log(response);
+				// console.log("hey");
+				 for(var i = 0; i < response.length; i++){
+		        	//console.log(response[i].ingredients);
+		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <div class="line"></div>');
+
+		      		}
+
+		      	     $('#bookmarklist p').on('click', function(e){
+				      	e.preventDefault();
+				      	// console.log('clicker');
+				      	var item = ($(this).attr("data-id"));
+				      	var pitem = ($(this).attr("data-pid"));
+				      	// console.log(item);
+				      	// console.log(pitem);
+				      	loadGlutenProduct(item,pitem);
+				      });
+			}else{
+				console.log("no");
+			}
+
+		} // Success Function
+	});
+};
+
+var loadGlutenProduct = function(item,pitem){
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+	landingTemplate = htmlArg;
+
+	var glutenproduct = $(htmlArg).find('#glutenbookmarkproduct').html();
+	$.template('glutenproducttemplate', glutenproduct);
+
+	var html = $.render('', 'glutenproducttemplate');
+
+	$('#wrap').append(html);
+	// console.log(item,pitem);
+	getGlutenProduct(item,pitem);
+});
+};
+
+var getGlutenProduct = function(item,pitem){
+	console.log(item);
+	 $('#glutenstatement').append(item);
+     $('h2').append(pitem);
+
+     if(item.indexOf("WHEAT") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(item.indexOf("Rye") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(item.indexOf("Barley") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(item.indexOf("Oats") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(item.indexOf("Wheat") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else{
+      	$('#bookmarkgluten').html('This product does not contain Gluten');
+      }
+
+      $.fn.wrapInTag = function(opts) {
+
+	var tag = opts.tag || 'strong',
+      words = opts.words || [],
+      regex = RegExp(words.join('|'), 'gi'), //case insensitive
+      replacement = '<'+ tag +'>$&</'+ tag +'>';
+
+  	return this.html(function() {
+    return $(this).text().replace(regex, replacement);
+  });
+};
+
+$('#glutenstatement').wrapInTag({
+  tag: 'strong',
+  words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
+});
 
 }
