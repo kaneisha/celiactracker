@@ -539,12 +539,15 @@ $('#gluten_free').on('click', function(e) {
 			$('#buttons p').css("margin-left", "100px");
 			$('#buttons p').css("margin-top", "60px");
 			e.preventDefault();
-			// $('#buttons').append('<p>Has been added to your bookmarks!</p>');
-			// $('#buttons').css("display","none");
 			glutenFreeBookmark(item);
 });
 $('#not_gluten').on('click', function(e) {
-			//console.log('clicks');
+			$('#gluten_free').css("display","none");
+			$('#not_gluten').css("display","none");
+			$('#buttons').append('<p>Has been added to your bookmarks!</p>');
+			$('#buttons p').css("color", "#6cb419");
+			$('#buttons p').css("margin-left", "100px");
+			$('#buttons p').css("margin-top", "60px");
 			e.preventDefault();
 			glutenBookmark(item);
 });
@@ -568,9 +571,7 @@ var glutenFreeBookmark = function(item){
 		dataType : 'json',
 		success : function(response) {
 			if (response) {
-				// console.log('bookmarked');
-				// $('#buttons').css("display","none");
-				// $('#buttons').append('<p>Has been added to your bookmarks!</p>');
+
 			} else {
 				console.log('did not work');
 			}
@@ -649,7 +650,7 @@ var getGlutenFreeList = function() {
 				      	var pitem = ($(this).attr("data-pid"));
 				      	// console.log(item);
 				      	// console.log(pitem);
-				      	loadBookmarkProduct(item,pitem);
+				      	loadGlutenFreeProduct(item,pitem);
 				      });
 			}else{
 				console.log("no");
@@ -658,7 +659,7 @@ var getGlutenFreeList = function() {
 		} // Success Function
 	});
 };
-var loadBookmarkProduct = function(item,pitem){
+var loadGlutenFreeProduct = function(item,pitem){
 	$('#wrap').empty();
 	$.get('templates/template.html', function(htmlArg) {
 
