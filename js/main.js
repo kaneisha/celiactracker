@@ -377,13 +377,31 @@ var getMemberResults = function(api){
       	addSearchHistory(item);
       });
 
+      $(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
       $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li>Bookmarks</li>\
-					<li>Search History</li>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
 					<li id="logout">Logout</li>\
 				</ul>\
 			</nav>' );
@@ -559,6 +577,35 @@ $('#not_gluten').on('click', function(e) {
 			glutenBookmark(item);
 });
 
+$(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      		<input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
+				<nav>\
+				<ul>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
+					<li id="logout">Logout</li>\
+				</ul>\
+			</nav>' );
+
 };
 
 //--------------------------------------------------------- Bookmarks ------------------------------------------------------------------//
@@ -669,6 +716,35 @@ var getGlutenFreeList = function() {
 
 		} // Success Function
 	});
+
+	$(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      		<input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
+				<nav>\
+				<ul>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
+					<li id="logout">Logout</li>\
+				</ul>\
+			</nav>' );
 };
 var loadGlutenFreeProduct = function(item,pitem){
 	$('#wrap').empty();
@@ -710,6 +786,52 @@ var getGlutenFreeProduct = function(item,pitem){
       }else{
       	$('#bookmarkglutenfree').html('This product does not contain Gluten');
       }
+
+            $.fn.wrapInTag = function(opts) {
+
+	var tag = opts.tag || 'strong',
+      words = opts.words || [],
+      regex = RegExp(words.join('|'), 'gi'), //case insensitive
+      replacement = '<'+ tag +'>$&</'+ tag +'>';
+
+  	return this.html(function() {
+    return $(this).text().replace(regex, replacement);
+  });
+};
+
+$('#glutenfreestatement').wrapInTag({
+  tag: 'strong',
+  words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
+});
+
+      $(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+            $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      		<input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
+				<nav>\
+				<ul>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
+					<li id="logout">Logout</li>\
+				</ul>\
+			</nav>' );
 
 }
 
@@ -765,6 +887,35 @@ var getGlutenList = function() {
 
 		} // Success Function
 	});
+
+	$(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      		<input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
+				<nav>\
+				<ul>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
+					<li id="logout">Logout</li>\
+				</ul>\
+			</nav>' );
 };
 
 var loadGlutenProduct = function(item,pitem){
@@ -788,6 +939,11 @@ var getGlutenProduct = function(item,pitem){
 	console.log(item);
 	 $('#glutenstatement').append(item);
      $('h2').append(pitem);
+
+     if(item === ''){
+      	$('#statement').html('Ingredients not available');
+      	$('#gluten').html('Ingredients not available');
+      }
 
      if(item.indexOf("WHEAT") > -1){
       	$('#bookmarkgluten').css('color', 'red');
@@ -824,6 +980,35 @@ $('#glutenstatement').wrapInTag({
   tag: 'strong',
   words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
 });
+
+$(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      		<input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
+				<nav>\
+				<ul>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
+					<li id="logout">Logout</li>\
+				</ul>\
+			</nav>' );
 
 }
 
@@ -905,6 +1090,35 @@ var getHistoryList = function() {
 
 		} // Success Function
 	});
+
+	$(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      		<input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
+				<nav>\
+				<ul>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
+					<li id="logout">Logout</li>\
+				</ul>\
+			</nav>' );
 };
 
 var loadHistoryProduct = function(item,pitem){
@@ -925,9 +1139,13 @@ var loadHistoryProduct = function(item,pitem){
 };
 
 var getHistoryProduct = function(item,pitem){
-	console.log(item);
 	 $('#historystatement').append(item);
      $('h2').append(pitem);
+
+     if(item === ""){
+      	$('#historystatement').html('Ingredients not available');
+      	$('#historygluten').html('Ingredients not available');
+      }
 
      if(item.indexOf("WHEAT") > -1){
       	$('#historygluten').css('color', 'red');
@@ -964,5 +1182,35 @@ $('#historystatement').wrapInTag({
   tag: 'strong',
   words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
 });
+
+$(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clickers history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+
+      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      		<input type="checkbox" id="clicker">\
+			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
+				<nav>\
+				<ul>\
+					<li id="books">Bookmarks</li>\
+					<li id="history">Search History</li>\
+					<li id="logout">Logout</li>\
+				</ul>\
+			</nav>' );
 
 }
