@@ -536,6 +536,8 @@ $('#gluten_free').on('click', function(e) {
 			$('#not_gluten').css("display","none");
 			$('#buttons').append('<p>Has been added to your bookmarks!</p>');
 			$('#buttons p').css("color", "#6cb419");
+			$('#buttons p').css("margin-left", "100px");
+			$('#buttons p').css("margin-top", "60px");
 			e.preventDefault();
 			// $('#buttons').append('<p>Has been added to your bookmarks!</p>');
 			// $('#buttons').css("display","none");
@@ -632,11 +634,11 @@ var getGlutenFreeList = function() {
 		success : function(response) {
 			// console.log(response);
 			if(response){
-				console.log(response);
+				//console.log(response);
 				// console.log("hey");
 				 for(var i = 0; i < response.length; i++){
-		        	console.log(response[i].ingredients);
-		        	$('#bookmarklist').append('<p data-id="'+ response[i].id + '">' + response[i].name + '</p> <div class="line"></div>');
+		        	//console.log(response[i].ingredients);
+		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <div class="line"></div>');
 
 		      		}
 
@@ -644,9 +646,10 @@ var getGlutenFreeList = function() {
 				      	e.preventDefault();
 				      	// console.log('clicker');
 				      	var item = ($(this).attr("data-id"));
-				      	//var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
-				      	// console.log(itemid);
-				      	loadBookmarkProduct(item);
+				      	var pitem = ($(this).attr("data-pid"));
+				      	// console.log(item);
+				      	// console.log(pitem);
+				      	loadBookmarkProduct(item,pitem);
 				      });
 			}else{
 				console.log("no");
@@ -655,3 +658,45 @@ var getGlutenFreeList = function() {
 		} // Success Function
 	});
 };
+var loadBookmarkProduct = function(item,pitem){
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+	landingTemplate = htmlArg;
+
+	var glutenfreeproduct = $(htmlArg).find('#bookmarkproduct').html();
+	$.template('glutenfreeproducttemplate', glutenfreeproduct);
+
+	var html = $.render('', 'glutenfreeproducttemplate');
+
+	$('#wrap').append(html);
+	// console.log(item,pitem);
+	getGlutenFreeProduct(item,pitem);
+});
+};
+
+var getGlutenFreeProduct = function(item,pitem){
+	console.log(item);
+	 $('#glutenfreestatement').append(item);
+     $('h2').append(pitem);
+
+     if(item.indexOf("WHEAT") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(item.indexOf("Rye") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(item.indexOf("Barley") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(item.indexOf("Oats") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(item.indexOf("Wheat") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else{
+      	$('#bookmarkglutenfree').html('This product does not contain Gluten');
+      }
+
+}

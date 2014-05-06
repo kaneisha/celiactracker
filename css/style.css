@@ -231,8 +231,8 @@ h2 {
   height: 2px;
   background-color: #c5c6c2;
   border-radius: 2px;
-  margin: 9px 0 23px 7px;
-  width: 270px; }
+  margin: 9px 0 23px 55px;
+  width: 350px; }
 
 #statement {
   font-family: arial;
@@ -260,3 +260,19 @@ h2 {
     margin-bottom: 15px;
     color: #4b4c4c;
     font-family: helvetica; }
+
+#bookmarkglutenfree {
+  color: #6cb419;
+  font-family: helvetica;
+  margin-bottom: 23px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 15px; }
+
+#glutenfreestatement {
+  font-family: arial;
+  padding-left: 8px;
+  padding-right: 5px;
+  font-size: 15px;
+  margin-bottom: 15px;
+  margin-top: 5px; }
