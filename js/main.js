@@ -383,11 +383,11 @@ var getMemberResults = function(api){
 			logout();
 		});
 
-		$(document).on('click', '#books', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			loadGlutenFreeList();
-		});
+		// $(document).on('click', '#books', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	loadGlutenFreeList();
+		// });
 
 		$(document).on('click', '#history', function(e) {
 			console.log('clicks history');
@@ -723,17 +723,17 @@ var getGlutenFreeList = function() {
 			logout();
 		});
 
-		$(document).on('click', '#books', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			loadGlutenFreeList();
-		});
+		// $(document).on('click', '#books3', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	loadGlutenFreeList();
+		// });
 
-		$(document).on('click', '#history', function(e) {
-			console.log('clicks history');
-			e.preventDefault();
-			loadHistoryList();
-		});
+		// $(document).on('click', '#history', function(e) {
+		// 	console.log('clicks history');
+		// 	e.preventDefault();
+		// 	loadHistoryList();
+		// });
 
 	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
@@ -894,17 +894,17 @@ var getGlutenList = function() {
 			logout();
 		});
 
-		$(document).on('click', '#books', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			loadGlutenFreeList();
-		});
+		// $(document).on('click', '#books', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	loadGlutenFreeList();
+		// });
 
-		$(document).on('click', '#history', function(e) {
-			console.log('clicks history');
-			e.preventDefault();
-			loadHistoryList();
-		});
+		// $(document).on('click', '#history', function(e) {
+		// 	console.log('clicks history');
+		// 	e.preventDefault();
+		// 	loadHistoryList();
+		// });
 
 	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
@@ -987,11 +987,11 @@ $(document).on('click', '#logout', function(e) {
 			logout();
 		});
 
-		$(document).on('click', '#books', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			loadGlutenFreeList();
-		});
+		// $(document).on('click', '#books', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	loadGlutenFreeList();
+		// });
 
 		$(document).on('click', '#history', function(e) {
 			console.log('clicks history');
@@ -1097,17 +1097,17 @@ var getHistoryList = function() {
 			logout();
 		});
 
-		$(document).on('click', '#books', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			loadGlutenFreeList();
-		});
+		// $(document).on('click', '#books', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	loadGlutenFreeList();
+		// });
 
-		$(document).on('click', '#history', function(e) {
-			console.log('clicks history');
-			e.preventDefault();
-			loadHistoryList();
-		});
+		// $(document).on('click', '#history', function(e) {
+		// 	console.log('clicks history');
+		// 	e.preventDefault();
+		// 	loadHistoryList();
+		// });
 
 	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
@@ -1189,11 +1189,11 @@ $(document).on('click', '#logout', function(e) {
 			logout();
 		});
 
-		$(document).on('click', '#books', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			loadGlutenFreeList();
-		});
+		// $(document).on('click', '#books', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	loadGlutenFreeList();
+		// });
 
 		$(document).on('click', '#history', function(e) {
 			console.log('clickers history');
