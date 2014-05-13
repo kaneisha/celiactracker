@@ -3,10 +3,10 @@ var appTemplate;
 
 var onPress = function(e){
       	if(e.keyCode == 13){
-      		var search = $('.result_search').val();
+      		var search = $('.user_search').val();
 			loadResults(search);
       	}
-      }
+}
 
 window.addEventListener('keydown', onPress);
 
@@ -64,10 +64,12 @@ var loadLanding = function() {
 			loadLogin();
 		});
 
+
+
 	});
+
 };
 
-//loadLanding();
 
 var loadLoggedIn = function(userID,userName) {
 	console.log(userID);
@@ -125,9 +127,9 @@ var loadLoggedIn = function(userID,userName) {
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">Bookmarks</li>\
 					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="logout"><img src="images/logout.png" class="icons">Logout</li>\
 				</ul>\
 			</nav>' );
 
@@ -313,9 +315,10 @@ var getResults = function(api){
 
 
       for(var i = 0; i < data.hits.length; i++){
-        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div id="line"></div>');
+        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div class="line"></div>');
 
       }
+      // $('#list')[0].scrollTop = $('#list')[0].scrollHeight;
 
       $('#list p').on('click', function(e){
       	e.preventDefault();
@@ -328,6 +331,8 @@ var getResults = function(api){
 
 
     });
+
+
 };
 
 // ------------------------------------------------------ Member Results --------------------------------------------------------------------//
@@ -383,18 +388,6 @@ var getMemberResults = function(api){
 			logout();
 		});
 
-		// $(document).on('click', '#books', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	loadGlutenFreeList();
-		// });
-
-		// $(document).on('click', '#history', function(e) {
-		// 	console.log('clicks history');
-		// 	e.preventDefault();
-		// 	loadHistoryList();
-		// });
-
       $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
@@ -408,6 +401,15 @@ var getMemberResults = function(api){
 
 
     });
+
+	// var onPressResults = function(e){
+ //      	if(e.keyCode == 13){
+ //      		var search = $('.result_search').val();
+	// 		loadResults(search);
+ //      	}
+	// }
+
+	// window.addEventListener('keydown', onPressResults);
 };
 //--------------------------------------------------------- Product ------------------------------------------------------------------------//
 
@@ -446,6 +448,9 @@ var getProduct = function(item){
 
 
       if(data.nf_ingredient_statement.indexOf("WHEAT") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("wheat") > -1){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
       }else if(data.nf_ingredient_statement.indexOf("Rye") > -1){
@@ -518,6 +523,9 @@ var getMemberProduct = function(item){
 
 
       if(data.nf_ingredient_statement.indexOf("WHEAT") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("wheat") > -1){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
       }else if(data.nf_ingredient_statement.indexOf("Rye") > -1){
@@ -681,6 +689,7 @@ var loadGlutenFreeList = function(){
 	$('#glutenbtn').on('click', function(e){
 		loadGlutenList();
 	});
+
 });
 };
 
@@ -722,18 +731,6 @@ var getGlutenFreeList = function() {
 			e.preventDefault();
 			logout();
 		});
-
-		// $(document).on('click', '#books3', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	loadGlutenFreeList();
-		// });
-
-		// $(document).on('click', '#history', function(e) {
-		// 	console.log('clicks history');
-		// 	e.preventDefault();
-		// 	loadHistoryList();
-		// });
 
 	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
@@ -810,17 +807,6 @@ $('#glutenfreestatement').wrapInTag({
 			logout();
 		});
 
-		// $(document).on('click', '#books', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	loadGlutenFreeList();
-		// });
-
-		// $(document).on('click', '#history', function(e) {
-		// 	console.log('clicks history');
-		// 	e.preventDefault();
-		// 	loadHistoryList();
-		// });
 
             $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
@@ -886,6 +872,10 @@ var getGlutenList = function() {
 			}
 
 		} // Success Function
+	});
+
+	$('#glutenfreebtn').on('click', function(e){
+		loadGlutenFreeList();
 	});
 
 	$(document).on('click', '#logout', function(e) {

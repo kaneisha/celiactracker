@@ -163,6 +163,12 @@ ul{
 	}
 }
 
+.icons{
+	float: left;
+	height: 30px;
+	width: 40px;
+}
+
 
 /*------------------------------------Login/SignUp Page------------------------*/
 fieldset{
@@ -257,6 +263,8 @@ fieldset{
 
 #list{
 	margin-top: 30px;
+	height: 460px;
+	overflow-y: auto;
 
 	p{
 		margin-left: 15px;
@@ -364,6 +372,36 @@ h2{
 	font-size: 15px;
 	margin-bottom: 15px;
 	margin-top: 5px;
+}
+
+#book_title{
+	color: $green;
+	text-align: center;
+	margin-top: 37px;
+	letter-spacing: 1.5px;
+	font-family: garamond;
+}
+
+#gg{
+	margin-top: 30px;
+	padding-bottom: 15px;
+}
+
+#glutenfreebtn{
+	margin-left: 70px;
+	font-family: garamond;
+	font-weight: bold;
+	color: $green;
+	text-decoration: underline;
+}
+#glutenbtn{
+	float: right;
+	margin-right: 70px;
+	margin-top: -20px;
+	font-family: garamond;
+	font-weight: bold;
+	text-decoration: underline;
+	color: $list;
 }
 /*---------------------------- Search History Page ------------------------------------*/
 #shlist{
