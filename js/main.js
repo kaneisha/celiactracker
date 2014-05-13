@@ -26,7 +26,11 @@ var appTemplate;
 		});
 
 		$(document).on('click', '.brand_nonmember', function(e) {
-			// console.log('clicks history');
+			e.preventDefault();
+			loadLanding();
+		});
+
+		$(document).on('click', '.arrow', function(e) {
 			e.preventDefault();
 			loadLanding();
 		});
