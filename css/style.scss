@@ -277,7 +277,9 @@ fieldset{
 .brand{
 	padding-top: 0;
 }
-
+.brand_nonmember{
+	padding-top: 0;
+}
 /*---------------------------- Product Page ------------------------------------*/
 .api{
 	float: right;
@@ -374,7 +376,7 @@ h2{
 	margin-top: 5px;
 }
 
-#book_title{
+.title{
 	color: $green;
 	text-align: center;
 	margin-top: 37px;

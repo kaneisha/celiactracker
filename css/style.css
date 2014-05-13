@@ -235,6 +235,9 @@ fieldset {
 .brand {
   padding-top: 0; }
 
+.brand_nonmember {
+  padding-top: 0; }
+
 /*---------------------------- Product Page ------------------------------------*/
 .api {
   float: right; }
@@ -319,7 +322,7 @@ h2 {
   margin-bottom: 15px;
   margin-top: 5px; }
 
-#book_title {
+.title {
   color: #6cb419;
   text-align: center;
   margin-top: 37px;

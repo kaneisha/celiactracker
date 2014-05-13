@@ -1,6 +1,36 @@
 var landingTemplate;
 var appTemplate;
 
+		$(document).on('click', '#logout', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			logout();
+		});
+
+		$(document).on('click', '#books', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadGlutenFreeList();
+		});
+
+		$(document).on('click', '#history', function(e) {
+			console.log('clicks history');
+			e.preventDefault();
+			loadHistoryList();
+		});
+
+		$(document).on('click', '.brand', function(e) {
+			// console.log('clicks history');
+			e.preventDefault();
+			loadLoggedIn(userID,userName);
+		});
+
+		$(document).on('click', '.brand_nonmember', function(e) {
+			// console.log('clicks history');
+			e.preventDefault();
+			loadLanding();
+		});
+
 var onPress = function(e){
       	if(e.keyCode == 13){
       		var search = $('.user_search').val();
@@ -105,23 +135,29 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-		$(document).on('click', '#logout', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			logout();
-		});
+		// $(document).on('click', '#logout', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	logout();
+		// });
 
-		$(document).on('click', '#books', function(e) {
-			console.log('clicks');
-			e.preventDefault();
-			loadGlutenFreeList();
-		});
+		// $(document).on('click', '#books', function(e) {
+		// 	console.log('clicks');
+		// 	e.preventDefault();
+		// 	loadGlutenFreeList();
+		// });
 
-		$(document).on('click', '#history', function(e) {
-			console.log('clicks history');
-			e.preventDefault();
-			loadHistoryList();
-		});
+		// $(document).on('click', '#history', function(e) {
+		// 	console.log('clicks history');
+		// 	e.preventDefault();
+		// 	loadHistoryList();
+		// });
+
+		// $(document).on('click', '.brand', function(e) {
+		// 	// console.log('clicks history');
+		// 	e.preventDefault();
+		// 	loadLoggedIn(userID,userName);
+		// });
 
 		$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
@@ -1153,19 +1189,7 @@ $(document).on('click', '#logout', function(e) {
 			console.log('clicks');
 			e.preventDefault();
 			logout();
-		});
-
-		// $(document).on('click', '#books', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	loadGlutenFreeList();
-		// });
-
-		// $(document).on('click', '#history', function(e) {
-		// 	console.log('clickers history');
-		// 	e.preventDefault();
-		// 	loadHistoryList();
-		// });
+});
 
 
       $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
