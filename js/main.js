@@ -221,29 +221,39 @@ var register = function() {
 	} else {
 	console.log(response);
 	if(response.error == "Not a valid Email Address"){
+		$('#email_error').css("display","none");
+		$('#email_error').css("display","block");
 		$('#email_error').append(response.error);
-		// $("#pwd_error").css("display","none");
-		// $("#error").css("display","none");
+		$("#pwd_error").css("display","none");
+		$("#error").css("display","none");
 	}
-	if(response.error == "Email already exists"){
+	else if(response.error == "Email already exists"){
+		$('#email_error').css("display","none");
+		$('#email_error').css("display","block");
 		$('#email_error').append(response.error);
-		// $("#pwd_error").css("display","none");
-		// $("#error").css("display","none");
+		$("#pwd_error").css("display","none");
+		$("#error").css("display","none");
 	}
-	if(response.error == "Password must be at least 8 to 15 characters"){
+	else if(response.error == "Password must be at least 8 to 15 characters"){
+		$('#pwd_error').css("display","none");
+		$('#pwd_error').css("display","block");
 		$('#pwd_error').append(response.error);
 		$("#email_error").css("display","none");
 		$("#error").css("display","none");
 	}
-	if(response.error == "Username already exists"){
+	else if(response.error == "Username already exists"){
+		$('#error').css("display","none");
+		$('#error').css("display","block");
 		$('#error').append(response.error);
 		$("#email_error").css("display","none");
-		// $("#pwd_error").css("display","none");
-	}
+		$("#pwd_error").css("display","none");
+	};
+
+
 
 	}
 	}
-	//return false;
+
 	});
 
 	return false;
@@ -609,8 +619,10 @@ $('#gluten_free').on('click', function(e) {
 			$('#not_gluten').css("display","none");
 			$('#buttons').append('<p>Has been added to your bookmarks!</p>');
 			$('#buttons p').css("color", "#6cb419");
-			$('#buttons p').css("margin-left", "100px");
+			$('#buttons p').css("text-align", "center");
 			$('#buttons p').css("margin-top", "60px");
+			$('#buttons p').css("font-weight", "bold");
+			$('#buttons p').css("font-family", "garamond");
 			e.preventDefault();
 			glutenFreeBookmark(item);
 });
@@ -619,8 +631,10 @@ $('#not_gluten').on('click', function(e) {
 			$('#not_gluten').css("display","none");
 			$('#buttons').append('<p>Has been added to your bookmarks!</p>');
 			$('#buttons p').css("color", "#6cb419");
-			$('#buttons p').css("margin-left", "100px");
+			$('#buttons p').css("text-align", "center");
 			$('#buttons p').css("margin-top", "60px");
+			$('#buttons p').css("font-weight", "bold");
+			$('#buttons p').css("font-family", "garamond");
 			e.preventDefault();
 			glutenBookmark(item);
 });
@@ -1004,18 +1018,6 @@ $(document).on('click', '#logout', function(e) {
 			e.preventDefault();
 			logout();
 		});
-
-		// $(document).on('click', '#books', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	loadGlutenFreeList();
-		// });
-
-		// $(document).on('click', '#history', function(e) {
-		// 	console.log('clicks history');
-		// 	e.preventDefault();
-		// 	loadHistoryList();
-		// });
 
       $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\

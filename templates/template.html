@@ -48,6 +48,7 @@
     	<header>
 			<div id="space">
 				<div class="logo">
+					<img src="images/arrow.png">
 					<p class="brand_nonmember">Celiac Tracker</p>
 				</div><!-- Logo -->
 	        </div>
@@ -76,24 +77,26 @@
 	        </div>
     	</header>
 
-    	<div id="home">
-	    	<h2 id="celiac" style="margin-top:80px;">Celiac Tracker</h2>
-	    	<form method="post">
-	    	<fieldset>
-	    		<div id="error"></div>
-	    		<input type="text" placeholder="Username" class="member" name="user" id="user">
-	    	</fieldset>
-	    	<fieldset>
-	    		<div id="email_error"></div>
-	    		<input type="text" placeholder="Email" class="member" name="email" id="email">
-	    	</fieldset>
-	    	<fieldset>
-	    		<div id="pwd_error"></div>
-	    		<input type="text" placeholder="Password" class="member" name="pwd" id="pass">
-	    	</fieldset>
-	    	<button class="member_btn" id="sign_up">Sign Up</button>
-	    	</form>
-    	</div><!--home-->
+    	<form id="signupform" name="signupform" method="post">
+	    	<div id="home">
+		    	<h2 id="celiac" style="margin-top:80px;">Celiac Tracker</h2>
+		    	<form method="post">
+		    	<fieldset>
+		    		<div id="error"></div>
+		    		<input type="text" placeholder="Username" class="member" name="user" id="user">
+		    	</fieldset>
+		    	<fieldset>
+		    		<div id="email_error"></div>
+		    		<input type="text" placeholder="Email" class="member" name="email" id="email">
+		    	</fieldset>
+		    	<fieldset>
+		    		<div id="pwd_error"></div>
+		    		<input type="text" placeholder="Password" class="member" name="pwd" id="pass">
+		    	</fieldset>
+		    	<button class="member_btn" id="sign_up">Sign Up</button>
+		    	</form>
+	    	</div><!--home-->
+	    </form>
 
 
 	</script><!-- Sign Up Page -->
@@ -172,8 +175,10 @@
 
     	<img class="api" src="images/api.png">
     	<div id="buttons">
-    	<img src="images/notgluten_btn.png" id="gluten_free">
-    	<img src="images/gluten_btn.png" id="not_gluten">
+    	<!--<img src="images/notgluten_btn.png" id="gluten_free">-->
+    	<!--<img src="images/gluten_btn.png" id="not_gluten">-->
+    	<button id="gluten_free">Bookmark As Gluten Free</button>
+    	<button id="not_gluten">Bookmark As Not Gluten Free</button>
     	</div>
 
 	</script><!-- Product Page -->
