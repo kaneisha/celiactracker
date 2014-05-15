@@ -348,12 +348,12 @@ var loadResults = function(search){
 
 	var api = "http://api.nutritionix.com/v1/search/" + search + "?results=0:21&fields=item_name,brand_name,item_id,nf_ingredient_statement&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
 
-	getResults(api);
+	getResults(api,search);
 });
 };
 
 
-var getResults = function(api){
+var getResults = function(api,search){
 	  $.getJSON( api, {
 	    // tags: "mount rainier",
 	    // tagmode: "any",
@@ -368,7 +368,6 @@ var getResults = function(api){
         $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div class="line"></div>');
 
       }
-      // $('#list')[0].scrollTop = $('#list')[0].scrollHeight;
 
       $('#list p').on('click', function(e){
       	e.preventDefault();
@@ -376,7 +375,7 @@ var getResults = function(api){
       	var itemid = ($(this).attr("data-id"));
       	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
       	// console.log(itemid);
-      	loadProduct(item);
+      	loadProduct(item,search);
       })
 
 
@@ -451,19 +450,10 @@ var getMemberResults = function(api){
 
 
     });
-
-	// var onPressResults = function(e){
- //      	if(e.keyCode == 13){
- //      		var search = $('.result_search').val();
-	// 		loadResults(search);
- //      	}
-	// }
-
-	// window.addEventListener('keydown', onPressResults);
 };
 //--------------------------------------------------------- Product ------------------------------------------------------------------------//
 
-var loadProduct = function(item){
+var loadProduct = function(item,search){
 	$('#wrap').empty();
 	$.get('templates/template.html', function(htmlArg) {
 
@@ -477,17 +467,21 @@ var loadProduct = function(item){
 	$('#wrap').append(html);
 	// console.log(item);
 
-	getProduct(item);
+	getProduct(item,search);
 });
 };
 
-var getProduct = function(item){
+var getProduct = function(item,search){
 	$.getJSON( item, {
 	    format: "json"
 	  })
 
     .done(function( data ) {
       console.log(data);
+      $('#resultsapi').on('click', function(e){
+			e.preventDefault();
+			loadResults(search);
+		})
       $('#statement').append(data.nf_ingredient_statement);
       $('h2').append(data.item_name);
 
@@ -501,6 +495,9 @@ var getProduct = function(item){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
       }else if(data.nf_ingredient_statement.indexOf("wheat") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("Wheat") > -1){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
       }else if(data.nf_ingredient_statement.indexOf("Rye") > -1){
