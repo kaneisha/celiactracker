@@ -36,17 +36,33 @@ var appTemplate;
 
 var onPress = function(e){
       	if(e.keyCode == 13){
-      		var home = $('#home').find()
 
-      		// if(){
+      		var home = $('#home').length;
+      		var loggedout =  $('.loggedout').length;
 
-      		// }else if(){
+      		if(home === 1){
+      			var search = $('#user_search').val();
+
+      			console.log(loggedout);
+      			if(loggedout === 1){
+      				loadResults(search);
+      			}else{
+      				loadMemberResults(search);
+      			}
+      		}else{
+
+      			var search = $('.result_search').val();
+
+      			console.log(loggedout);
+      			if(loggedout === 1){
+      				loadResults(search);
+      			}else{
+      				loadMemberResults(search);
+      			}
+
+      		}
 
 
-      		// }
-
-   //    		var search = $('.result_search').val();
-			// loadResults(search);
       	}
 }
 
@@ -147,29 +163,6 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-		// $(document).on('click', '#logout', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	logout();
-		// });
-
-		// $(document).on('click', '#books', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	loadGlutenFreeList();
-		// });
-
-		// $(document).on('click', '#history', function(e) {
-		// 	console.log('clicks history');
-		// 	e.preventDefault();
-		// 	loadHistoryList();
-		// });
-
-		// $(document).on('click', '.brand', function(e) {
-		// 	// console.log('clicks history');
-		// 	e.preventDefault();
-		// 	loadLoggedIn(userID,userName);
-		// });
 
 		$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
@@ -295,7 +288,7 @@ var loginUser = function() {
 		success : function(response) {
 
 		console.log(response, user, pass, "hello? success");
-		if (response) {
+		if (response.username) {
 			console.log("logged in");
 			//loadLanding();
 			var userID = response.username.id;
@@ -303,6 +296,7 @@ var loginUser = function() {
 			loadLoggedIn(userID,userName);
 		} else {
 			console.log(response, user, pass);
+			$('#login_error').html('Invalid Login');
 			if(response.error == "Invalid Login"){
 				$('#login_error').append(response.error);
 			}
@@ -386,7 +380,7 @@ var loadMemberResults = function(search){
 
 		landingTemplate = htmlArg;
 
-		var resultsmemberlist = $(htmlArg).find('#results').html();
+		var resultsmemberlist = $(htmlArg).find('#member_results').html();
 		$.template('resultsmembertemplate', resultsmemberlist);
 
 		var html = $.render('', 'resultsmembertemplate');
@@ -743,17 +737,14 @@ var getGlutenFreeList = function() {
 				// console.log("hey");
 				 for(var i = 0; i < response.length; i++){
 		        	//console.log(response[i].ingredients);
-		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <div class="line"></div>');
+		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <img src="images/trash.png" id="trash"> <div class="line"></div>');
 
 		      		}
 
 		      	     $('#bookmarklist p').on('click', function(e){
 				      	e.preventDefault();
-				      	// console.log('clicker');
 				      	var item = ($(this).attr("data-id"));
 				      	var pitem = ($(this).attr("data-pid"));
-				      	// console.log(item);
-				      	// console.log(pitem);
 				      	loadGlutenFreeProduct(item,pitem);
 				      });
 			}else{

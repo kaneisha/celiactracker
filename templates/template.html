@@ -10,7 +10,7 @@
 		    	<img id="home_logo" src="images/logo.png">
 		    	<h2 id="celiac">Celiac Tracker</h2>
 		    	<!-- <img src="images/enter.png"> -->
-		    	<input type="text" placeholder="Search for Product" id="user_search">
+		    	<input type="text" placeholder="Search for Product" id="user_search" class="loggedout">
 		    	<input type="submit" id="enter" value="Submit">
 		    	<p><a href="http://celiac.org/" id="webpage">Learn more about Celiac Disease</a></p>
 
@@ -23,6 +23,28 @@
     </script>
 
     <script type="text/template" id="results">
+
+    	<header>
+			<div id="space">
+				<div class="logo">
+					<p class="brand_nonmember">Celiac Tracker</p>
+				</div>
+	        </div>
+    	</header>
+
+    	<input type="text" placeholder="Search for Product" class="result_search loggedout">
+    	<div id="counter"></div>
+
+    	<div id="list">
+    		<!--<div id="line"></div>-->
+    	</div><!-- List -->
+
+    	<img class="api" src="images/api.png">
+
+    </script>
+
+
+    <script type="text/template" id="member_results">
 
     	<header>
 			<div id="space">
@@ -54,7 +76,7 @@
 	        </div>
     	</header>
 
-    	<input type="text" placeholder="Search for Product" class="result_search">
+    	<input type="text" placeholder="Search for Product" class="result_search loggedout">
     	<h2></h2>
     	<div id="underline"></div>
     	<p id="gluten">This product does not contain Gluten</p>
