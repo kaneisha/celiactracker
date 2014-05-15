@@ -20,7 +20,6 @@ var appTemplate;
 		});
 
 		$(document).on('click', '.brand', function(e) {
-			// console.log('clicks history');
 			e.preventDefault();
 			loadLoggedIn(userID,userName);
 		});
@@ -37,8 +36,17 @@ var appTemplate;
 
 var onPress = function(e){
       	if(e.keyCode == 13){
-      		var search = $('.user_search').val();
-			loadResults(search);
+      		var home = $('#home').find()
+
+      		// if(){
+
+      		// }else if(){
+
+
+      		// }
+
+   //    		var search = $('.result_search').val();
+			// loadResults(search);
       	}
 }
 
@@ -192,6 +200,8 @@ var loadRegister = function(){
 
 	$('#sign_up').on('click', function(e) {
 			console.log('clicks');
+			// clear error div
+			$('.s_error').empty();
 			e.preventDefault();
 			register();
 		});
@@ -221,32 +231,16 @@ var register = function() {
 	} else {
 	console.log(response);
 	if(response.error == "Not a valid Email Address"){
-		$('#email_error').css("display","none");
-		$('#email_error').css("display","block");
 		$('#email_error').append(response.error);
-		$("#pwd_error").css("display","none");
-		$("#error").css("display","none");
 	}
 	else if(response.error == "Email already exists"){
-		$('#email_error').css("display","none");
-		$('#email_error').css("display","block");
 		$('#email_error').append(response.error);
-		$("#pwd_error").css("display","none");
-		$("#error").css("display","none");
 	}
 	else if(response.error == "Password must be at least 8 to 15 characters"){
-		$('#pwd_error').css("display","none");
-		$('#pwd_error').css("display","block");
 		$('#pwd_error').append(response.error);
-		$("#email_error").css("display","none");
-		$("#error").css("display","none");
 	}
 	else if(response.error == "Username already exists"){
-		$('#error').css("display","none");
-		$('#error').css("display","block");
 		$('#error').append(response.error);
-		$("#email_error").css("display","none");
-		$("#pwd_error").css("display","none");
 	};
 
 
@@ -401,11 +395,11 @@ var loadMemberResults = function(search){
 
 	var api = "http://api.nutritionix.com/v1/search/" + search + "?results=0:21&fields=item_name,brand_name,item_id,nf_ingredient_statement&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
 
-	getMemberResults(api);
+	getMemberResults(api,search);
 });
 };
 
-var getMemberResults = function(api){
+var getMemberResults = function(api,search){
 	  $.getJSON( api, {
 	    // tags: "mount rainier",
 	    // tagmode: "any",
@@ -427,7 +421,7 @@ var getMemberResults = function(api){
       	var itemid = ($(this).attr("data-id"));
       	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
       	// console.log(itemid);
-      	loadMemberProduct(item);
+      	loadMemberProduct(item,search);
       	addSearchHistory(item);
       });
 
@@ -535,7 +529,7 @@ $('#statement').wrapInTag({
 };
 
 //--------------------------------------------------------- Member Product ------------------------------------------------------------------//
-var loadMemberProduct = function(item){
+var loadMemberProduct = function(item,search){
 	$('#wrap').empty();
 	$.get('templates/template.html', function(htmlArg) {
 
@@ -549,17 +543,21 @@ var loadMemberProduct = function(item){
 	$('#wrap').append(html);
 	// console.log(item);
 
-	getMemberProduct(item);
+	getMemberProduct(item,search);
 });
 };
 
-var getMemberProduct = function(item){
+var getMemberProduct = function(item,search){
 	$.getJSON( item, {
 	    format: "json"
 	  })
 
     .done(function( data ) {
       //console.log(data);
+      $('#resultsmemberapi').on('click', function(e){
+			e.preventDefault();
+			loadMemberResults(search);
+		})
       $('#statement').append(data.nf_ingredient_statement);
       $('h2').append(data.item_name);
 
@@ -641,18 +639,6 @@ $(document).on('click', '#logout', function(e) {
 			e.preventDefault();
 			logout();
 		});
-
-		// $(document).on('click', '#books', function(e) {
-		// 	console.log('clicks');
-		// 	e.preventDefault();
-		// 	loadGlutenFreeList();
-		// });
-
-		// $(document).on('click', '#history', function(e) {
-		// 	console.log('clicks history');
-		// 	e.preventDefault();
-		// 	loadHistoryList();
-		// });
 
       $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
