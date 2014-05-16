@@ -668,8 +668,6 @@ var glutenFreeBookmark = function(item){
 			} else {
 				console.log('did not work');
 			}
-			// $('#buttons').css("display","none");
-			//$('#buttons').append('<p>Has been added to your bookmarks!</p>');
 		}
 	});
 	}); // Done Statement
@@ -737,16 +735,23 @@ var getGlutenFreeList = function() {
 				// console.log("hey");
 				 for(var i = 0; i < response.length; i++){
 		        	//console.log(response[i].ingredients);
-		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <img src="images/trash.png" id="trash"> <div class="line"></div>');
+		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <img data-itemid="'+ response[i].id + '" src="images/trash.png" id="trash"> <div class="line"></div>');
 
 		      		}
 
-		      	     $('#bookmarklist p').on('click', function(e){
+		      	    $('#bookmarklist p').on('click', function(e){
 				      	e.preventDefault();
 				      	var item = ($(this).attr("data-id"));
 				      	var pitem = ($(this).attr("data-pid"));
 				      	loadGlutenFreeProduct(item,pitem);
-				      });
+				    });
+
+		      	    $('#bookmarklist #trash').on('click', function(e){
+		      	    	e.preventDefault();
+		      	    	var itemid = ($(this).attr("data-itemid"));
+				      	console.log(itemid);
+						loadDeleteGlutenFree(itemid);
+					});
 			}else{
 				console.log("no");
 			}
@@ -771,6 +776,32 @@ var getGlutenFreeList = function() {
 				</ul>\
 			</nav>' );
 };
+
+var loadDeleteGlutenFree = function(itemid){
+	console.log(itemid);
+	$.ajax({
+		url : '/php/removeBookmark.php',
+		data : {
+			id: itemid,
+		},
+		type : 'get',
+		dataType : 'text',
+		success : function(response) {
+			console.log(response);
+			if (response) {
+				console.log('removed bookmark');
+			} else {
+				loadGlutenFreeList()
+				console.log('did not remove');
+			}
+		},
+		error: function(response){
+			console.log(response, 'hi');
+		}
+	});
+};
+
+
 var loadGlutenFreeProduct = function(item,pitem){
 	$('#wrap').empty();
 	$.get('templates/template.html', function(htmlArg) {
@@ -878,8 +909,6 @@ var getGlutenList = function() {
 		success : function(response) {
 			// console.log(response);
 			if(response){
-				//console.log(response);
-				// console.log("hey");
 				 for(var i = 0; i < response.length; i++){
 		        	//console.log(response[i].ingredients);
 		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <div class="line"></div>');
@@ -891,8 +920,6 @@ var getGlutenList = function() {
 				      	// console.log('clicker');
 				      	var item = ($(this).attr("data-id"));
 				      	var pitem = ($(this).attr("data-pid"));
-				      	// console.log(item);
-				      	// console.log(pitem);
 				      	loadGlutenProduct(item,pitem);
 				      });
 			}else{
