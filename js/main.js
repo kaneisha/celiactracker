@@ -911,7 +911,7 @@ var getGlutenList = function() {
 			if(response){
 				 for(var i = 0; i < response.length; i++){
 		        	//console.log(response[i].ingredients);
-		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <div class="line"></div>');
+		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p><img data-itemid="'+ response[i].id + '" src="images/trash.png" id="trash"> <div class="line"></div>');
 
 		      		}
 
@@ -922,6 +922,13 @@ var getGlutenList = function() {
 				      	var pitem = ($(this).attr("data-pid"));
 				      	loadGlutenProduct(item,pitem);
 				      });
+
+		      	     $('#bookmarklist #trash').on('click', function(e){
+		      	    	e.preventDefault();
+		      	    	var itemid = ($(this).attr("data-itemid"));
+				      	console.log(itemid);
+						loadDeleteGluten(itemid);
+					 });
 			}else{
 				console.log("no");
 			}
@@ -949,6 +956,30 @@ var getGlutenList = function() {
 					<li id="logout">Logout</li>\
 				</ul>\
 			</nav>' );
+};
+
+var loadDeleteGluten = function(itemid){
+	console.log(itemid);
+	$.ajax({
+		url : '/php/removeBookmarkGluten.php',
+		data : {
+			id: itemid,
+		},
+		type : 'get',
+		dataType : 'text',
+		success : function(response) {
+			console.log(response);
+			if (response) {
+				console.log('removed bookmark');
+			} else {
+				loadGlutenList()
+				console.log('did not remove');
+			}
+		},
+		error: function(response){
+			console.log(response, 'hi');
+		}
+	});
 };
 
 var loadGlutenProduct = function(item,pitem){
