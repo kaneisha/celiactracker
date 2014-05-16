@@ -901,7 +901,6 @@ var loadGlutenList = function(){
 };
 
 var getGlutenList = function() {
-	console.log("go");
 	$.ajax({
 		url : '/php/glutenList.php',
 		type : 'get',
@@ -941,7 +940,6 @@ var getGlutenList = function() {
 	});
 
 	$(document).on('click', '#logout', function(e) {
-			console.log('clicks');
 			e.preventDefault();
 			logout();
 		});
@@ -1022,6 +1020,9 @@ var getGlutenProduct = function(item,pitem){
       	$('#bookmarkgluten').css('color', 'red');
       	$('#bookmarkgluten').html('This product contains Gluten');
       }else if(item.indexOf("Wheat") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(item.indexOf("wheat") > -1){
       	$('#bookmarkgluten').css('color', 'red');
       	$('#bookmarkgluten').html('This product contains Gluten');
       }else{
@@ -1111,7 +1112,6 @@ var loadHistoryList = function(){
 };
 
 var getHistoryList = function() {
-	console.log("go");
 	$.ajax({
 		url : '/php/historyList.php',
 		type : 'get',
@@ -1122,20 +1122,22 @@ var getHistoryList = function() {
 				//console.log(response);
 				// console.log("hey");
 				 for(var i = 0; i < response.length; i++){
-		        	//console.log(response[i].ingredients);
-		        	$('#shlist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <div class="line"></div>');
+		        	$('#shlist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p><img data-itemid="'+ response[i].id + '" src="images/trash.png" id="trash"> <div class="line"></div>');
 
 		      		}
 
 		      	     $('#shlist p').on('click', function(e){
 				      	e.preventDefault();
-				      	// console.log('clicker');
 				      	var item = ($(this).attr("data-id"));
 				      	var pitem = ($(this).attr("data-pid"));
-				      	// console.log(item);
-				      	// console.log(pitem);
 				      	loadHistoryProduct(item,pitem);
 				      });
+
+		      	     $('#shlist #trash').on('click', function(e){
+		      	     	e.preventDefault();
+		      	     	var itemid = ($(this).attr("data-itemid"));
+		      	     	loadDeleteHistory(itemid);
+		      	     })
 			}else{
 				console.log("no");
 			}
@@ -1159,6 +1161,30 @@ var getHistoryList = function() {
 					<li id="logout">Logout</li>\
 				</ul>\
 			</nav>' );
+};
+
+var loadDeleteHistory = function(itemid){
+	console.log(itemid);
+	$.ajax({
+		url : '/php/removeSearchHistory.php',
+		data : {
+			id: itemid,
+		},
+		type : 'get',
+		dataType : 'text',
+		success : function(response) {
+			console.log(response);
+			if (response) {
+				console.log('removed history item');
+			} else {
+				loadHistoryList()
+				console.log('did not remove');
+			}
+		},
+		error: function(response){
+			console.log(response, 'hi');
+		}
+	});
 };
 
 var loadHistoryProduct = function(item,pitem){
