@@ -168,8 +168,8 @@ var loadLoggedIn = function(userID,userName) {
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
 				<ul>\
-					<li id="books"><img src="images/bkm.png" class="icons">Bookmarks</li>\
-					<li id="history">Search History</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">Bookmarks<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">Search History<div class="nav_line"></div></li>\
 					<li id="logout"><img src="images/logout.png" class="icons">Logout</li>\
 				</ul>\
 			</nav>' );
@@ -478,6 +478,12 @@ var getProduct = function(item,search){
       	$('#gluten').html('Ingredients not available');
       }
 
+      if(data.response === '"error_message":"This record has been deleted","error_code":"DELETED_RECORD","status_code":409'){
+      	$('h2').html('Item not available');
+      	$('#statement').html('Ingredients not available');
+      	$('#gluten').html('Ingredients not available');
+      }
+
 
       if(data.nf_ingredient_statement.indexOf("WHEAT") > -1){
       	$('#gluten').css('color', 'red');
@@ -560,6 +566,10 @@ var getMemberProduct = function(item,search){
       	$('#gluten').html('Ingredients not available');
       }
 
+
+	 if(status_code === 409){
+      	$('h2').html('Item not available');
+      }
 
       if(data.nf_ingredient_statement.indexOf("WHEAT") > -1){
       	$('#gluten').css('color', 'red');
@@ -843,7 +853,7 @@ var getGlutenFreeProduct = function(item,pitem){
       	$('#bookmarkglutenfree').html('This product does not contain Gluten');
       }
 
-            $.fn.wrapInTag = function(opts) {
+    $.fn.wrapInTag = function(opts) {
 
 	var tag = opts.tag || 'strong',
       words = opts.words || [],
