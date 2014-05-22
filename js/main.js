@@ -29,6 +29,11 @@ var appTemplate;
 			loadLanding();
 		});
 
+		$(document).on('click', '.brand_nonmemberresults', function(e) {
+			e.preventDefault();
+			loadLanding();
+		});
+
 		$(document).on('click', '.arrow', function(e) {
 			e.preventDefault();
 			loadLanding();
@@ -42,8 +47,6 @@ var onPress = function(e){
 
       		if(home === 1){
       			var search = $('#user_search').val();
-
-      			console.log(loggedout);
       			if(loggedout === 1){
       				loadResults(search);
       			}else{
@@ -406,6 +409,8 @@ var getMemberResults = function(api,search){
 
       for(var i = 0; i < data.hits.length; i++){
         $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div class="line"></div>');
+        var start = 0;
+        var length = 50;
 
       }
 
@@ -414,7 +419,22 @@ var getMemberResults = function(api,search){
       	// console.log('clicker');
       	var itemid = ($(this).attr("data-id"));
       	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
-      	// console.log(itemid);
+      	//var error = "NetworkError: 409 Conflict - https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf&format=json";
+
+      	// if(item.response == "error_message"){
+      	// 	console.log('heyyyyyyy');
+      	// }
+
+      	// if(item === "NetworkError: 409 Conflict - https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf&format=json"){
+      	// 	console.log('hey');
+      	// }
+
+      	// if(item == "NetworkError: 409 Conflict"){
+      	// 	console.log('hey');
+      	// }
+      	// if(item === error){
+      	// 	console.log('heyyyy');
+      	// }
       	loadMemberProduct(item,search);
       	addSearchHistory(item);
       });
@@ -548,12 +568,23 @@ var loadMemberProduct = function(item,search){
 };
 
 var getMemberProduct = function(item,search){
-	$.getJSON( item, {
-	    format: "json"
+	$.ajax({
+		url: item,
+	    dataType: "json",
+	    type: 'get'
 	  })
 
-    .done(function( data ) {
-      //console.log(data);
+	.error(function(d){
+		console.log(d, "request data");
+		if(d.statusText === "Conflict"){
+			$('h2').html('Item not available');
+			$('#statement').html('Ingredients not available');
+      		$('#gluten').html('Ingredients not available');
+		}
+	})
+
+    .success(function( data ) {
+
       $('#resultsmemberapi').on('click', function(e){
 			e.preventDefault();
 			loadMemberResults(search);
@@ -566,10 +597,6 @@ var getMemberProduct = function(item,search){
       	$('#gluten').html('Ingredients not available');
       }
 
-
-	 if(status_code === 409){
-      	$('h2').html('Item not available');
-      }
 
       if(data.nf_ingredient_statement.indexOf("WHEAT") > -1){
       	$('#gluten').css('color', 'red');
