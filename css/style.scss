@@ -321,13 +321,17 @@ fieldset{
 .brand{
 	padding-top: 0;
 }
+.brand_results{
+	margin-top: -29px;
+	margin-left: 25px;
+}
 .brand_nonmember{
 	margin-top: -29px;
 	margin-left: 20px;
 }
 .brand_nonmemberresults{
 	/*margin-top: -29px;*/
-	margin-left: 20px;
+	margin-left: 0px;
 }
 /*---------------------------- Product Page ------------------------------------*/
 .api{
@@ -440,9 +444,9 @@ h2{
 
 }
 
-#buttons{
-	/*background-image: url(../images/gradientb.png);*/
-}
+/*#resultsmemberapi{
+	width: 50px;
+}*/
 /*---------------------------- Bookmarks Page ------------------------------------*/
 #bookmarklist{
 	margin-top: 30px;

@@ -24,6 +24,12 @@ var appTemplate;
 			loadLoggedIn(userID,userName);
 		});
 
+
+		$(document).on('click', '.brand_results', function(e) {
+			e.preventDefault();
+			loadLoggedIn(userID,userName);
+		});
+
 		$(document).on('click', '.brand_nonmember', function(e) {
 			e.preventDefault();
 			loadLanding();
@@ -475,7 +481,16 @@ var getProduct = function(item,search){
 	    format: "json"
 	  })
 
-    .done(function( data ) {
+	.error(function(d){
+		console.log(d, "request data");
+		if(d.statusText === "Conflict"){
+			$('h2').html('Item not available');
+			$('#statement').html('Ingredients not available');
+      		$('#gluten').html('Ingredients not available');
+		}
+	})
+
+    .success(function( data ) {
       console.log(data);
       $('#resultsapi').on('click', function(e){
 			e.preventDefault();
@@ -662,7 +677,7 @@ $(document).on('click', '#logout', function(e) {
 			logout();
 		});
 
-      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
+      $('#space').html('<div class="logo"><img src="images/arrow.png" id="resultsmemberapi"><p class="brand_results">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
