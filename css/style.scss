@@ -289,11 +289,19 @@ fieldset{
 }
 
 .line{
-	height: 2px;
+	height: 1px;
 	background-color: $line;
 	/*width: 288px;*/
 	margin: 11px 9px 21px 9px;
 	border-radius: 2px;
+}
+
+#list p#food_title{
+	color: $green;
+	font-weight: bold;
+	font-family: garamond;
+	font-size: 20px;
+	margin-left: 15px;
 }
 
 #list{
@@ -302,10 +310,11 @@ fieldset{
 	overflow-y: auto;
 
 	p{
-		margin-left: 15px;
+		margin-left: 25px;
 		margin-bottom: 15px;
 		color: $list;
 		font-family: helvetica;
+		font-size: 12px;
 	}
 }
 

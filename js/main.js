@@ -358,10 +358,12 @@ var getResults = function(api,search){
       console.log(data);
        $('#counter').append('<p>' + data.hits.length + ' results found </p>');
 
-
-      for(var i = 0; i < data.hits.length; i++){
-        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div class="line"></div>');
-
+        for(var i = 0; i < data.hits.length; i++){
+      	if(data.hits[i].fields.nf_ingredient_statement != null){
+      	var start = 0;
+        var length = 50;
+        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
+		}
       }
 
       $('#list p').on('click', function(e){
@@ -408,14 +410,14 @@ var getMemberResults = function(api,search){
 	  })
     .done(function( data ) {
       console.log(data);
-       $('#counter').append('<p>' + data.hits.length + ' results found </p>');
+      $('#counter').append('<p>' + data.hits.length + ' results found </p>');
 
 
       for(var i = 0; i < data.hits.length; i++){
       	if(data.hits[i].fields.nf_ingredient_statement != null){
       	var start = 0;
         var length = 50;
-        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p>' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '</p> <div class="line"></div>');
+        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
 		}
       }
 

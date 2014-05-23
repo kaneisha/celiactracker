@@ -249,21 +249,29 @@ fieldset {
   margin-top: 6px; }
 
 .line {
-  height: 2px;
+  height: 1px;
   background-color: #c5c6c2;
   /*width: 288px;*/
   margin: 11px 9px 21px 9px;
   border-radius: 2px; }
+
+#list p#food_title {
+  color: #6cb419;
+  font-weight: bold;
+  font-family: garamond;
+  font-size: 20px;
+  margin-left: 15px; }
 
 #list {
   margin-top: 30px;
   height: 460px;
   overflow-y: auto; }
   #list p {
-    margin-left: 15px;
+    margin-left: 25px;
     margin-bottom: 15px;
     color: #4b4c4c;
-    font-family: helvetica; }
+    font-family: helvetica;
+    font-size: 12px; }
 
 .brand {
   padding-top: 0; }
