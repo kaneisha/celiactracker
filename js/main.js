@@ -362,22 +362,26 @@ var getResults = function(api,search){
 	  })
     .done(function( data ) {
       console.log(data);
-       $('#counter').append('<p>' + data.hits.length + ' results found </p>');
+
+       var count = 0;
 
         for(var i = 0; i < data.hits.length; i++){
-      	if(data.hits[i].fields.nf_ingredient_statement != null){
-      	var start = 0;
-        var length = 50;
-        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
-		}
+      		if(data.hits[i].fields.nf_ingredient_statement != null){
+      			count++;
+		      	var start = 0;
+		        var length = 50;
+		        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
+		        console.log(count);
+			}
       }
+
+      $('#counter').append('<p>' + count + ' results found </p>');
 
       $('#list p').on('click', function(e){
       	e.preventDefault();
       	// console.log('clicker');
       	var itemid = ($(this).attr("data-id"));
       	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
-      	// console.log(itemid);
       	loadProduct(item,search);
       })
 
@@ -416,16 +420,22 @@ var getMemberResults = function(api,search){
 	  })
     .done(function( data ) {
       console.log(data);
-      $('#counter').append('<p>' + data.hits.length + ' results found </p>');
+      // $('#counter').append('<p>' + data.hits.length + ' results found </p>');
+      var count = 0;
 
 
       for(var i = 0; i < data.hits.length; i++){
       	if(data.hits[i].fields.nf_ingredient_statement != null){
-      	var start = 0;
-        var length = 50;
-        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
+	      	count++
+	      	var start = 0;
+	        var length = 50;
+	        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
+	        console.log(count);
+
 		}
       }
+
+      $('#counter').append('<p>' + count + ' results found </p>');
 
       $('#list p').on('click', function(e){
       	e.preventDefault();
