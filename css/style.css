@@ -127,41 +127,54 @@ label {
 ul {
   list-style-type: none;
   font-family: arial;
-  /*margin-left: 10px;
-  text-align: center;*/ }
+  margin-left: 10px;
+  text-align: center; }
   ul li {
     padding-bottom: 10px;
     padding-top: 9px;
-    text-align: center;
-    color: #fcfcfc; }
+    text-align: right;
+    color: #fcfcfc;
+    font-size: 15px;
+    margin-right: 20px; }
   ul a {
     text-decoration: none;
     color: #fcfcfc; }
 
 .icons {
   float: left;
-  /*height: 30px;
-  width: 40px;*/ }
+  height: 25px;
+  width: 25px;
+  margin-right: 20px;
+  margin-top: -8px; }
 
-#logout img {
-  width: 36px;
-  margin-top: -10px;
-  margin-left: 14px; }
+/*#logout{
+	img{
+		width: 36px;
+		margin-top: -10px;
+		margin-left: 14px;
+	}
+}
 
-#history img {
-  width: 50px;
-  margin-top: -21px;
-  margin-left: 10px; }
+#history{
+	img{
+		width: 50px;
+		margin-top: -21px;
+		margin-left: 10px;
+	}
+}
 
-#books img {
-  width: 30px;
-  margin-top: -10px;
-  margin-left: 23px; }
-
+#books{
+	img{
+		width: 30px;
+		margin-top: -10px;
+		margin-left: 23px;
+	}
+}*/
 .nav_line {
   height: 2px;
-  background-color: #4b4c4c;
-  margin-top: 10px; }
+  background-color: rgba(75, 76, 76, 0.7);
+  margin-top: 10px;
+  /*margin-left: -20px;*/ }
 
 /*------------------------------------Login/SignUp Page------------------------*/
 fieldset {

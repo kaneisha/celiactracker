@@ -171,11 +171,15 @@ var loadLoggedIn = function(userID,userName) {
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
 				<ul>\
-					<li id="books"><img src="images/bkm.png" class="icons">Bookmarks<div class="nav_line"></div></li>\
-					<li id="history"><img src="images/history.png" class="icons">Search History<div class="nav_line"></div></li>\
-					<li id="logout"><img src="images/logout.png" class="icons">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
+
+		// <img src="images/bkm.png" class="icons">
+		// <img src="images/history.png" class="icons">
+		// <img src="images/logout.png" class="icons">
 
 	});
 };
@@ -408,10 +412,11 @@ var getMemberResults = function(api,search){
 
 
       for(var i = 0; i < data.hits.length; i++){
-        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p> <div class="line"></div>');
-        var start = 0;
+      	if(data.hits[i].fields.nf_ingredient_statement != null){
+      	var start = 0;
         var length = 50;
-
+        $('#list').append('<p data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p>' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '</p> <div class="line"></div>');
+		}
       }
 
       $('#list p').on('click', function(e){
@@ -419,22 +424,6 @@ var getMemberResults = function(api,search){
       	// console.log('clicker');
       	var itemid = ($(this).attr("data-id"));
       	var item = "https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf";
-      	//var error = "NetworkError: 409 Conflict - https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf&format=json";
-
-      	// if(item.response == "error_message"){
-      	// 	console.log('heyyyyyyy');
-      	// }
-
-      	// if(item === "NetworkError: 409 Conflict - https://api.nutritionix.com/v1_1/item?id=" + itemid + "&appId=58e7409d&appKey=ea55d470d93bafbab65a666b2541abcf&format=json"){
-      	// 	console.log('hey');
-      	// }
-
-      	// if(item == "NetworkError: 409 Conflict"){
-      	// 	console.log('hey');
-      	// }
-      	// if(item === error){
-      	// 	console.log('heyyyy');
-      	// }
       	loadMemberProduct(item,search);
       	addSearchHistory(item);
       });
@@ -450,9 +439,9 @@ var getMemberResults = function(api,search){
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 
@@ -676,9 +665,9 @@ $(document).on('click', '#logout', function(e) {
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 
@@ -807,9 +796,9 @@ var getGlutenFreeList = function() {
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 };
@@ -909,9 +898,9 @@ $('#glutenfreestatement').wrapInTag({
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 
@@ -986,9 +975,9 @@ var getGlutenList = function() {
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 };
@@ -1094,9 +1083,9 @@ $(document).on('click', '#logout', function(e) {
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 
@@ -1193,9 +1182,9 @@ var getHistoryList = function() {
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 };
@@ -1298,9 +1287,9 @@ $(document).on('click', '#logout', function(e) {
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
 				<nav>\
 				<ul>\
-					<li id="books">Bookmarks</li>\
-					<li id="history">Search History</li>\
-					<li id="logout">Logout</li>\
+					<li id="books"><img src="images/bkm.png" class="icons">BOOKMARKS<div class="nav_line"></div></li>\
+					<li id="history"><img src="images/history.png" class="icons">SEARCH HISTORY<div class="nav_line"></div></li>\
+					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
 
