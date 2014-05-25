@@ -1205,7 +1205,13 @@ var getHistoryList = function() {
 	$('#delete').on('click', function(e){
 		e.preventDefault();
 		//var itemid = ($(this).attr("data-itemid"));
-		loadDeleteAllHistory();
+		// alert("You are about to delete your entire search history");
+		if(confirm("You are about to delete all of your Search History are you sure you want to do that?") == true){
+			loadDeleteAllHistory();
+		}else{
+			loadHistoryList();
+		}
+
 	})
 
 	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
