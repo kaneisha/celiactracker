@@ -314,11 +314,11 @@ var loginUser = function() {
 				$('#login_error').append(response.error);
 			}
 		}
-		},
+		}, // success
 		error: function(response){
 			console.log(response, user, pass, "hello? error");
-		}//success
-	//return false;
+		} // error
+
 	});
 
 	return false;
@@ -420,7 +420,6 @@ var getMemberResults = function(api,search){
 	  })
     .done(function( data ) {
       console.log(data);
-      // $('#counter').append('<p>' + data.hits.length + ' results found </p>');
       var count = 0;
 
 
@@ -1172,8 +1171,7 @@ var getHistoryList = function() {
 		success : function(response) {
 			// console.log(response);
 			if(response){
-				//console.log(response);
-				// console.log("hey");
+
 				 for(var i = 0; i < response.length; i++){
 		        	$('#shlist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p><img data-itemid="'+ response[i].id + '" src="images/trash.png" id="trash"> <div class="line"></div>');
 
@@ -1204,6 +1202,12 @@ var getHistoryList = function() {
 			logout();
 		});
 
+	$('#delete').on('click', function(e){
+		e.preventDefault();
+		//var itemid = ($(this).attr("data-itemid"));
+		loadDeleteAllHistory();
+	})
+
 	      $('#space').html('<div class="logo"><p class="brand">Celiac Tracker</p></div>\
       		<input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menutwo"></label>\
@@ -1229,6 +1233,30 @@ var loadDeleteHistory = function(itemid){
 			console.log(response);
 			if (response) {
 				console.log('removed history item');
+			} else {
+				loadHistoryList()
+				console.log('did not remove');
+			}
+		},
+		error: function(response){
+			console.log(response, 'hi');
+		}
+	});
+};
+
+var loadDeleteAllHistory = function(userID){
+	// console.log(itemid);
+	$.ajax({
+		url : '/php/removeAllHistory.php',
+		data : {
+			id: userID,
+		},
+		type : 'get',
+		dataType : 'text',
+		success : function(response) {
+			console.log(response);
+			if (response) {
+				console.log('removed all history');
 			} else {
 				loadHistoryList()
 				console.log('did not remove');

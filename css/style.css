@@ -135,7 +135,8 @@ ul {
     text-align: right;
     color: #fcfcfc;
     font-size: 15px;
-    margin-right: 20px; }
+    margin-right: 20px;
+    cursor: pointer; }
   ul a {
     text-decoration: none;
     color: #fcfcfc; }
@@ -271,7 +272,8 @@ fieldset {
     margin-bottom: 15px;
     color: #4b4c4c;
     font-family: helvetica;
-    font-size: 12px; }
+    font-size: 12px;
+    cursor: pointer; }
 
 .brand {
   padding-top: 0; }
@@ -464,6 +466,15 @@ h2 {
   margin-bottom: 15px;
   margin-top: 5px; }
 
+#delete {
+  color: #6cb419;
+  font-family: garamond;
+  font-weight: bold;
+  margin-left: 15px;
+  margin-top: 10px;
+  text-decoration: underline; }
+
+/*-------------------------------------------- Media Queries --------------------------------------*/
 @media screen and (max-width: 327px) {
   #bookmarklist p {
     font-size: 14px; }

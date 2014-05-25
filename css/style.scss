@@ -157,6 +157,7 @@ ul{
 		color: $bg;
 		font-size: 15px;
 		margin-right: 20px;
+		cursor: pointer;
 	}
 
 	a{
@@ -315,6 +316,7 @@ fieldset{
 		color: $list;
 		font-family: helvetica;
 		font-size: 12px;
+		cursor: pointer;
 	}
 }
 
@@ -560,6 +562,16 @@ h2{
 	margin-top: 5px;
 }
 
+#delete{
+	color: $green;
+	font-family: garamond;
+	font-weight: bold;
+	margin-left: 15px;
+	margin-top: 10px;
+	text-decoration: underline;
+}
+
+/*-------------------------------------------- Media Queries --------------------------------------*/
 @media screen and (max-width: 327px){
 	#bookmarklist{
 		p{
