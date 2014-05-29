@@ -1,7 +1,7 @@
 $green: #6cb419;
 $bg: #fcfcfc;
-$border: #f2f2f2;
-$holder: #b5b5b5;
+$border: #e5e5e5;
+$holder: #383838;
 $search: #fffdfe;
 $list: #4b4c4c;
 $line: #c5c6c2;
@@ -14,6 +14,10 @@ html,body,div,form,fieldset,legend,label,h1,h2,h3,h4,h5,h6,p,ul,dl,dt,dd,figure,
 
 body{
 	background-color: $bg;
+}
+
+input{
+	padding: 6px;
 }
 
 #space{
@@ -69,9 +73,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#303030', end
    color: $holder;
 }
 
-/*#enter{
-	background-image: url(../images/enter.png);
-}*/
 
 #webpage{
 	color: $green;
@@ -125,7 +126,7 @@ input[type=checkbox]:checked ~ nav {
     display: block;
     position: relative;
     z-index: 1;
-    margin-top: -1px;
+    margin-top: -5px;
     /*float: right;*/
   	/*width: 200px;*/
   	width: 100%;
@@ -373,7 +374,7 @@ h2{
 	margin-top: 5px;
 }
 
-#gluten_free{
+#gluten_free,#gluten_free_nonmember{
   margin-top: 35px;
   text-align: center;
   float: left;
@@ -409,7 +410,7 @@ h2{
 		0px 1px 0px rgba(255,255,255,0);
 
 }
-#not_gluten{
+#not_gluten,#not_gluten_nonmember{
   /*background-image: url(../images/gradientb.png);*/
   text-align: center;
   float: right;
@@ -444,6 +445,10 @@ h2{
 		0px -1px 3px rgba(255,255,255,0),
 		0px 1px 0px rgba(255,255,255,0);
 
+}
+
+#login_link, #signup_link{
+	text-decoration: underline;
 }
 
 /*#resultsmemberapi{

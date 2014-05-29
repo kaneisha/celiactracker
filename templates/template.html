@@ -84,6 +84,11 @@
     	<p id="statement"></p>
 
     	<img class="api" src="images/api.png">
+    	<div id="buttons_nonmember">
+    	<p></p>
+	    	<button id="gluten_free_nonmember">Bookmark As Gluten Free</button>
+	    	<button id="not_gluten_nonmember">Bookmark As Not Gluten Free</button>
+    	</div>
 
 	</script><!-- Product Page -->
 
@@ -123,6 +128,42 @@
 
 	</script><!-- Sign Up Page -->
 
+	<script type="text/template" id="signupbookmark">
+
+		<header>
+			<div id="space">
+				<div class="arrow_bkm">
+	        		<img src="images/arrow.png" style="margin-top:7px;">
+	        	</div>
+	        	<div id="back">
+	        	</div>
+	        </div>
+    	</header>
+
+    	<form id="signupform" name="signupform" method="post">
+	    	<div id="home">
+		    	<h2 id="celiac" style="margin-top:80px;">Celiac Tracker</h2>
+		    	<form method="post">
+		    	<fieldset>
+		    		<div id="error" class="s_error"></div>
+		    		<input type="text" placeholder="Username" class="member" name="user" id="user">
+		    	</fieldset>
+		    	<fieldset>
+		    		<div id="email_error" class="s_error"></div>
+		    		<input type="text" placeholder="Email" class="member" name="email" id="email">
+		    	</fieldset>
+		    	<fieldset>
+		    		<div id="pwd_error" class="s_error"></div>
+		    		<input type="text" placeholder="Password" class="member" name="pwd" id="pass">
+		    	</fieldset>
+		    	<button class="member_btn" id="sign_upbkm">Sign Up</button>
+		    	</form>
+	    	</div><!--home-->
+	    </form>
+
+
+	</script><!-- Sign Up Page Bookmark -->
+
 	<script type="text/template" id="login">
 
 		<header>
@@ -145,6 +186,32 @@
 	    		<div id="login_error"></div>
 	    	</fieldset>
 	    	<button class="member_btn" id="login_btn">Login</button>
+    	</div><!--home-->
+
+	</script>
+
+	<script type="text/template" id="bookmark_login">
+
+		<header>
+			<div id="space">
+				<div class="arrow_bkm">
+	        		<img src="images/arrow.png" style="margin-top:7px;">
+	        	</div>
+	        	<div id="back">
+	        	</div>
+	        </div>
+    	</header>
+
+    	<div id="home">
+	    	<h2 id="celiac" style="margin-top:80px;">Celiac Tracker</h2>
+	    	<fieldset>
+	    		<input type="text" placeholder="Username" class="member" id="login_user">
+	    	</fieldset>
+	    	<fieldset>
+	    		<input type="text" placeholder="Password" class="member" id="login_pass">
+	    		<div id="login_error"></div>
+	    	</fieldset>
+	    	<button class="member_btn" id="bookmark_login_btn">Login</button>
     	</div><!--home-->
 
 	</script>

@@ -21,13 +21,15 @@ var appTemplate;
 
 		$(document).on('click', '.brand', function(e) {
 			e.preventDefault();
-			loadLoggedIn(userID,userName);
+			//loadLoggedIn(userID,userName);
+			loginCheck();
 		});
 
 
 		$(document).on('click', '.brand_results', function(e) {
 			e.preventDefault();
-			loadLoggedIn(userID,userName);
+			// loadLoggedIn(userID,userName);
+			loginCheck();
 		});
 
 		$(document).on('click', '.brand_nonmember', function(e) {
@@ -44,6 +46,12 @@ var appTemplate;
 			e.preventDefault();
 			loadLanding();
 		});
+
+		// $(document).on('click', '.arrow_bkm', function(e) {
+		// console.log('clicks');
+		// e.preventDefault();
+		// loadProduct(item,search);
+		// });
 
 var onPress = function(e){
       	if(e.keyCode == 13){
@@ -99,7 +107,6 @@ var loginCheck = function() {
 loginCheck();
 
 var loadLanding = function() {
-	// console.log("hey");
 	$('#wrap').empty();
 	$.get('templates/template.html', function(htmlArg) {
 
@@ -131,8 +138,6 @@ var loadLanding = function() {
 			loadLogin();
 		});
 
-
-
 	});
 
 };
@@ -154,20 +159,17 @@ var loadLoggedIn = function(userID,userName) {
 		$('#wrap').append(html);
 
 		$('#enter').on('click', function(e) {
-			//console.log('clicks');
 			e.preventDefault();
 			var search = $('#user_search').val();
 			loadMemberResults(search);
 		});
 
 		$('#signup').on('click', function(e) {
-			//console.log('clicks');
 			e.preventDefault();
 			loadRegister();
 		});
 
 		$('#login').on('click', function(e) {
-			//console.log('clicks');
 			e.preventDefault();
 			loadLogin();
 		});
@@ -259,6 +261,86 @@ var register = function() {
 	return false;
 };
 
+//----------------------------------------------------- Bookmark Register -------------------------------------------------------------------------//
+var loadRegisterBookmark = function(item,search){
+	$('#wrap').empty();
+	console.log('get template');
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var signupbkm = $(htmlArg).find('#signupbookmark').html();
+		$.template('registerbkmtemplate', signupbkm);
+
+		var html = $.render('', 'registerbkmtemplate');
+
+	$('#wrap').append(html);
+
+	$('#sign_upbkm').on('click', function(e) {
+			console.log('clicks');
+			// clear error div
+			$('.s_error').empty();
+			e.preventDefault();
+			registerBookmark(item,search);
+	});
+
+	$(document).on('click', '.arrow_bkm', function(e) {
+		console.log('clicks');
+		e.preventDefault();
+		loadProduct(item,search);
+		});
+
+	// $('.arrow_bkm').on('click', function(e) {
+	// 	console.log('clicks');
+	// 	e.preventDefault();
+	// 	loadProduct(item,search);
+	// });
+});
+};
+
+var registerBookmark = function(item,search) {
+	var user = $('#user').val();
+	var pass = $('#pass').val();
+	var email = $('#email').val();
+	$.ajax({
+		url : 'php/register.php',
+		data : {
+		username : user,
+		password : pass,
+		email : email
+	},
+	type : 'post',
+	dataType : 'json',
+	success : function(response) {
+	if (response.username) {
+	console.log(response.username);
+	console.log("hey");
+	var userID = response.username.id;
+	var userName = response.username.username;
+	loadMemberProduct(item,search);
+	} else {
+	console.log(response);
+	if(response.error == "Not a valid Email Address"){
+		$('#email_error').append(response.error);
+	}
+	else if(response.error == "Email already exists"){
+		$('#email_error').append(response.error);
+	}
+	else if(response.error == "Password must be at least 8 to 15 characters"){
+		$('#pwd_error').append(response.error);
+	}
+	else if(response.error == "Username already exists"){
+		$('#error').append(response.error);
+	};
+
+
+
+	}
+	}
+
+	});
+};
+
 
 //----------------------------------------------------- Login -------------------------------------------------------------------------//
 var loadLogin = function(){
@@ -324,6 +406,76 @@ var loginUser = function() {
 	return false;
 };
 
+//----------------------------------------------------- Bookmark Login -------------------------------------------------------------------------//
+var loadBookmarkLogin = function(item,search){
+	$('#wrap').empty();
+	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
+		var bkmlogin = $(htmlArg).find('#bookmark_login').html();
+		$.template('bkmlogintemplate', bkmlogin);
+
+		var html = $.render('', 'bkmlogintemplate');
+
+	$('#wrap').append(html);
+
+	$('#bookmark_login_btn').on('click', function(e) {
+		console.log('clicks');
+		e.preventDefault();
+		loginBookmarkUser(item,search);
+	});
+
+	// $('.arrow_bkm').on('click', function(e) {
+	// 	console.log('clicks');
+	// 	e.preventDefault();
+	// 	loadProduct(item,search);
+	// });
+});
+};
+
+var loginBookmarkUser = function(item,search) {
+
+
+	var user = $('#login_user').val();
+	var pass = $('#login_pass').val();
+
+	// console.log(user, pass, "login running");
+
+	$.ajax({
+		url : 'php/login.php',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			username : user,
+			password : pass
+		},
+		success : function(response) {
+
+		console.log(response, user, pass, "hello? success");
+		if (response.username) {
+			console.log("logged in");
+			//loadLanding();
+			var userID = response.username.id;
+			var userName = response.username.username;
+			loadMemberProduct(item,search);
+		} else {
+			console.log(response, user, pass);
+			$('#login_error').html('Invalid Login');
+			if(response.error == "Invalid Login"){
+				$('#login_error').append(response.error);
+			}
+		}
+		}, // success
+		error: function(response){
+			console.log(response, user, pass, "hello? error");
+		} // error
+
+	});
+
+	return false;
+};
+
 // ------------------------------------------------------ Logout ------------------------------------------------------------------------//
 var logout = function() {
 $.get('php/logout.php', function() {
@@ -361,7 +513,7 @@ var getResults = function(api,search){
 	    format: "json"
 	  })
     .done(function( data ) {
-      console.log(data);
+      // console.log(data);
 
        var count = 0;
 
@@ -371,7 +523,7 @@ var getResults = function(api,search){
 		      	var start = 0;
 		        var length = 50;
 		        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
-		        console.log(count);
+		        // console.log(count);
 			}
       }
 
@@ -500,7 +652,7 @@ var getProduct = function(item,search){
 	})
 
     .success(function( data ) {
-      console.log(data);
+      // console.log(data);
       $('#resultsapi').on('click', function(e){
 			e.preventDefault();
 			loadResults(search);
@@ -558,6 +710,32 @@ $('#statement').wrapInTag({
   tag: 'strong',
   words: ['wheat', 'Oats', 'rye', 'barley', 'gluten free', 'gluten']
 });
+
+$('#not_gluten_nonmember').on('click', function(e){
+    e.preventDefault();
+    $('#gluten_free_nonmember').css("display","none");
+	$('#not_gluten_nonmember').css("display","none");
+	$('#buttons_nonmember').html('<p>To bookmark this product you must be a member.</p><p id="bkm_options"><a id="login_link">Login Now</a> or <a id="signup_link">Sign Up!</a></p>');
+	$('#buttons_nonmember p').css("color", "#6cb419");
+	$('#buttons_nonmember p').css("text-align", "center");
+	$('#buttons_nonmember p').css("margin-top", "60px");
+	$('#buttons_nonmember p').css("font-weight", "bold");
+	$('#buttons_nonmember p').css("font-family", "garamond");
+	$('#bkm_options').css("margin-top", "10px");
+});
+
+    $(document).on('click', '#login_link', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadBookmarkLogin(item,search);
+	});
+
+	$(document).on('click', '#signup_link', function(e) {
+			console.log('clicks');
+			e.preventDefault();
+			loadRegisterBookmark(item,search);
+	});
+
 
 });
 
@@ -658,7 +836,7 @@ $('#gluten_free').on('click', function(e) {
 			//console.log('clicks');
 			$('#gluten_free').css("display","none");
 			$('#not_gluten').css("display","none");
-			$('#buttons').append('<p>Has been added to your bookmarks!</p>');
+			$('#buttons').append('<p>Added to your bookmarks!</p>');
 			$('#buttons p').css("color", "#6cb419");
 			$('#buttons p').css("text-align", "center");
 			$('#buttons p').css("margin-top", "60px");
