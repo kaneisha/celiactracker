@@ -284,17 +284,11 @@ var loadRegisterBookmark = function(item,search){
 			registerBookmark(item,search);
 	});
 
-	$(document).on('click', '.arrow_bkm', function(e) {
+	$('.arrow_bkm').on('click', function(e) {
 		console.log('clicks');
 		e.preventDefault();
 		loadProduct(item,search);
-		});
-
-	// $('.arrow_bkm').on('click', function(e) {
-	// 	console.log('clicks');
-	// 	e.preventDefault();
-	// 	loadProduct(item,search);
-	// });
+	});
 });
 };
 
@@ -426,11 +420,12 @@ var loadBookmarkLogin = function(item,search){
 		loginBookmarkUser(item,search);
 	});
 
-	// $('.arrow_bkm').on('click', function(e) {
-	// 	console.log('clicks');
-	// 	e.preventDefault();
-	// 	loadProduct(item,search);
-	// });
+	$(document).on('click', '.arrow_bkm', function(e) {
+		console.log('clicks');
+		e.preventDefault();
+		loadProduct(item,search);
+	});
+
 });
 };
 
@@ -724,12 +719,14 @@ $('#not_gluten_nonmember').on('click', function(e){
 	$('#bkm_options').css("margin-top", "10px");
 });
 
+	$(document).off('click', '#login_link');
     $(document).on('click', '#login_link', function(e) {
 			console.log('clicks');
 			e.preventDefault();
 			loadBookmarkLogin(item,search);
 	});
 
+    $(document).off('click', '#signup_link');
 	$(document).on('click', '#signup_link', function(e) {
 			console.log('clicks');
 			e.preventDefault();
