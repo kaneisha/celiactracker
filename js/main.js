@@ -47,12 +47,6 @@ var appTemplate;
 			loadLanding();
 		});
 
-		// $(document).on('click', '.arrow_bkm', function(e) {
-		// console.log('clicks');
-		// e.preventDefault();
-		// loadProduct(item,search);
-		// });
-
 var onPress = function(e){
       	if(e.keyCode == 13){
 
@@ -85,6 +79,9 @@ var onPress = function(e){
 
 window.addEventListener('keydown', onPress);
 
+
+// Checks to see if user is logged in already
+// If they are it takes them to the member landing page if not it goes to the regular landing page
 var loginCheck = function() {
 	$.ajax({
 		url : 'php/loginCheck.php',
@@ -120,14 +117,12 @@ var loadLanding = function() {
 		$('#wrap').append(html);
 
 		$('#enter').on('click', function(e) {
-			//console.log('clicks');
 			e.preventDefault();
 			var search = $('#user_search').val();
 			loadResults(search);
 		});
 
 		$('#signup').on('click', function(e) {
-			//console.log('clicks');
 			e.preventDefault();
 			loadRegister();
 		});
@@ -146,7 +141,6 @@ var loadLanding = function() {
 var loadLoggedIn = function(userID,userName) {
 	console.log(userID);
 	$('#wrap').empty();
-	//console.log('run');
 	$.get('templates/template.html', function(htmlArg) {
 
 		appTemplate = htmlArg;
@@ -174,7 +168,7 @@ var loadLoggedIn = function(userID,userName) {
 			loadLogin();
 		});
 
-
+		// Adds a menu to the view for members
 		$('#space').html('<p id="welcome">Welcome, ' + userName + '</p> <input type="checkbox" id="clicker">\
 			<label for="clicker"><img src="images/menu.png" id="menu"></label>\
 				<nav>\
@@ -184,10 +178,6 @@ var loadLoggedIn = function(userID,userName) {
 					<li id="logout"><img src="images/logout.png" class="icons">LOGOUT</li>\
 				</ul>\
 			</nav>' );
-
-		// <img src="images/bkm.png" class="icons">
-		// <img src="images/history.png" class="icons">
-		// <img src="images/logout.png" class="icons">
 
 	});
 };
@@ -209,6 +199,7 @@ var loadRegister = function(){
 	$('#sign_up').on('click', function(e) {
 			console.log('clicks');
 			// clear error div
+			// Clears the error div so error messages won't repeat
 			$('.s_error').empty();
 			e.preventDefault();
 			register();
@@ -237,7 +228,7 @@ var register = function() {
 	var userName = response.username.username;
 	loadLoggedIn(userID,userName);
 	} else {
-	console.log(response);
+	//If the signup is not valid it will show the following errors
 	if(response.error == "Not a valid Email Address"){
 		$('#email_error').append(response.error);
 	}
@@ -262,6 +253,9 @@ var register = function() {
 };
 
 //----------------------------------------------------- Bookmark Register -------------------------------------------------------------------------//
+
+// These functions will take the user back to the item they were on when they tried to bookmark but couldn't
+// because they were not logged in
 var loadRegisterBookmark = function(item,search){
 	$('#wrap').empty();
 	console.log('get template');
@@ -384,7 +378,7 @@ var loginUser = function() {
 			var userName = response.username.username;
 			loadLoggedIn(userID,userName);
 		} else {
-			console.log(response, user, pass);
+			// Will let the user know they have an invalid login
 			$('#login_error').html('Invalid Login');
 			if(response.error == "Invalid Login"){
 				$('#login_error').append(response.error);
@@ -401,6 +395,10 @@ var loginUser = function() {
 };
 
 //----------------------------------------------------- Bookmark Login -------------------------------------------------------------------------//
+
+// These functions will take the user back to the item they were on when they tried to bookmark but couldn't
+// because they were not logged in
+
 var loadBookmarkLogin = function(item,search){
 	$('#wrap').empty();
 	$.get('templates/template.html', function(htmlArg) {
@@ -420,7 +418,7 @@ var loadBookmarkLogin = function(item,search){
 		loginBookmarkUser(item,search);
 	});
 
-	$(document).on('click', '.arrow_bkm', function(e) {
+	$('.arrow_bkm_login').on('click', function(e) {
 		console.log('clicks');
 		e.preventDefault();
 		loadProduct(item,search);
@@ -435,7 +433,6 @@ var loginBookmarkUser = function(item,search) {
 	var user = $('#login_user').val();
 	var pass = $('#login_pass').val();
 
-	// console.log(user, pass, "login running");
 
 	$.ajax({
 		url : 'php/login.php',
@@ -508,9 +505,13 @@ var getResults = function(api,search){
 	    format: "json"
 	  })
     .done(function( data ) {
-      // console.log(data);
 
+       //Starts the counter for the amount of results as 0
        var count = 0;
+
+       //Loop through all the hits and anything that is not null for the ingredient statement it will lists them for the user
+       //For each item shown it will be added to the counter
+       //Substring will show only 50characters of the ingredients
 
         for(var i = 0; i < data.hits.length; i++){
       		if(data.hits[i].fields.nf_ingredient_statement != null){
@@ -518,7 +519,7 @@ var getResults = function(api,search){
 		      	var start = 0;
 		        var length = 50;
 		        $('#list').append('<p id="food_title" data-id="' + data.hits[i].fields.item_id + '">' + data.hits[i].fields.item_name + '</p><p data-id="' + data.hits[i].fields.item_id + '">' + 'Ingredients: ' + data.hits[i].fields.nf_ingredient_statement.substr(start,length) + '.....' + '</p> <div class="line"></div>');
-		        // console.log(count);
+
 			}
       }
 
@@ -626,7 +627,6 @@ var loadProduct = function(item,search){
 		var html = $.render('', 'producttemplate');
 
 	$('#wrap').append(html);
-	// console.log(item);
 
 	getProduct(item,search);
 });
@@ -647,7 +647,6 @@ var getProduct = function(item,search){
 	})
 
     .success(function( data ) {
-      // console.log(data);
       $('#resultsapi').on('click', function(e){
 			e.preventDefault();
 			loadResults(search);
@@ -666,7 +665,8 @@ var getProduct = function(item,search){
       	$('#gluten').html('Ingredients not available');
       }
 
-
+      //Searches through statement to look for the word and if it has it will change the
+      //gluten statement to red
       if(data.nf_ingredient_statement.indexOf("WHEAT") > -1){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
@@ -683,6 +683,24 @@ var getProduct = function(item,search){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
       }else if(data.nf_ingredient_statement.indexOf("Oats") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("oats") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("OATS") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("rye") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("RYE") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("BARLEY") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("barley") > -1){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
       }else{
@@ -710,7 +728,7 @@ $('#not_gluten_nonmember').on('click', function(e){
     e.preventDefault();
     $('#gluten_free_nonmember').css("display","none");
 	$('#not_gluten_nonmember').css("display","none");
-	$('#buttons_nonmember').html('<p>To bookmark this product you must be a member.</p><p id="bkm_options"><a id="login_link">Login Now</a> or <a id="signup_link">Sign Up!</a></p>');
+	$('#buttons_nonmember').html('<p>To bookmark this product you must be a member.</p><p id="bkm_options"><a class="login_link">Login Now</a> or <a class="signup_link">Sign Up!</a></p>');
 	$('#buttons_nonmember p').css("color", "#6cb419");
 	$('#buttons_nonmember p').css("text-align", "center");
 	$('#buttons_nonmember p').css("margin-top", "60px");
@@ -719,15 +737,28 @@ $('#not_gluten_nonmember').on('click', function(e){
 	$('#bkm_options').css("margin-top", "10px");
 });
 
-	$(document).off('click', '#login_link');
-    $(document).on('click', '#login_link', function(e) {
+$('#gluten_free_nonmember').on('click', function(e){
+    e.preventDefault();
+    $('#gluten_free_nonmember').css("display","none");
+	$('#not_gluten_nonmember').css("display","none");
+	$('#buttons_nonmember').html('<p>To bookmark this product you must be a member.</p><p id="bkm_options"><a class="login_link">Login Now</a> or <a class="signup_link">Sign Up!</a></p>');
+	$('#buttons_nonmember p').css("color", "#6cb419");
+	$('#buttons_nonmember p').css("text-align", "center");
+	$('#buttons_nonmember p').css("margin-top", "60px");
+	$('#buttons_nonmember p').css("font-weight", "bold");
+	$('#buttons_nonmember p').css("font-family", "garamond");
+	$('#bkm_options').css("margin-top", "10px");
+});
+
+	$(document).off('click', '.login_link');
+    $(document).on('click', '.login_link', function(e) {
 			console.log('clicks');
 			e.preventDefault();
 			loadBookmarkLogin(item,search);
 	});
 
-    $(document).off('click', '#signup_link');
-	$(document).on('click', '#signup_link', function(e) {
+    $(document).off('click', '.signup_link');
+	$(document).on('click', '.signup_link', function(e) {
 			console.log('clicks');
 			e.preventDefault();
 			loadRegisterBookmark(item,search);
@@ -806,6 +837,24 @@ var getMemberProduct = function(item,search){
       }else if(data.nf_ingredient_statement.indexOf("Wheat") > -1){
       	$('#gluten').css('color', 'red');
       	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("oats") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("OATS") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("rye") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("RYE") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("BARLEY") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("barley") > -1){
+      	$('#gluten').css('color', 'red');
+      	$('#gluten').html('This product contains Gluten');
       }else{
       	$('#gluten').html('This product does not contain Gluten');
       }
@@ -830,7 +879,6 @@ $('#statement').wrapInTag({
 }); // Done statement
 
 $('#gluten_free').on('click', function(e) {
-			//console.log('clicks');
 			$('#gluten_free').css("display","none");
 			$('#not_gluten').css("display","none");
 			$('#buttons').append('<p>Added to your bookmarks!</p>');
@@ -958,8 +1006,6 @@ var getGlutenFreeList = function() {
 		success : function(response) {
 			// console.log(response);
 			if(response){
-				//console.log(response);
-				// console.log("hey");
 				 for(var i = 0; i < response.length; i++){
 		        	//console.log(response[i].ingredients);
 		        	$('#bookmarklist').append('<p data-id="'+ response[i].ingredients + '" data-pid="'+ response[i].name + '">' + response[i].name + '</p> <img data-itemid="'+ response[i].id + '" src="images/trash.png" id="trash"> <div class="line"></div>');
@@ -1041,7 +1087,6 @@ var loadGlutenFreeProduct = function(item,pitem){
 	var html = $.render('', 'glutenfreeproducttemplate');
 
 	$('#wrap').append(html);
-	// console.log(item,pitem);
 	getGlutenFreeProduct(item,pitem);
 });
 };
@@ -1064,6 +1109,24 @@ var getGlutenFreeProduct = function(item,pitem){
       	$('#bookmarkglutenfree').css('color', 'red');
       	$('#bookmarkglutenfree').html('This product contains Gluten');
       }else if(item.indexOf("Wheat") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("oats") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("OATS") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("rye") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("RYE") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("BARLEY") > -1){
+      	$('#bookmarkglutenfree').css('color', 'red');
+      	$('#bookmarkglutenfree').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("barley") > -1){
       	$('#bookmarkglutenfree').css('color', 'red');
       	$('#bookmarkglutenfree').html('This product contains Gluten');
       }else{
@@ -1252,6 +1315,24 @@ var getGlutenProduct = function(item,pitem){
       }else if(item.indexOf("wheat") > -1){
       	$('#bookmarkgluten').css('color', 'red');
       	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("oats") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("OATS") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("rye") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("RYE") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("BARLEY") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
+      }else if(data.nf_ingredient_statement.indexOf("barley") > -1){
+      	$('#bookmarkgluten').css('color', 'red');
+      	$('#bookmarkgluten').html('This product contains Gluten');
       }else{
       	$('#bookmarkgluten').html('This product does not contain Gluten');
       }
@@ -1344,7 +1425,6 @@ var getHistoryList = function() {
 		type : 'get',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response);
 			if(response){
 
 				 for(var i = 0; i < response.length; i++){
@@ -1483,7 +1563,7 @@ var getHistoryProduct = function(item,pitem){
       	$('#historygluten').html('This product contains Gluten');
       }else if(item.indexOf("Barley") > -1){
       	$('#historygluten').css('color', 'red');
-      	$('#bookmarkgluten').html('This product contains Gluten');
+      	$('#historygluten').html('This product contains Gluten');
       }else if(item.indexOf("Oats") > -1){
       	$('#historygluten').css('color', 'red');
       	$('#historygluten').html('This product contains Gluten');
